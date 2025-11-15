@@ -1,1 +1,323 @@
-<html><head><link rel='manifest' href='manifest.json'></head><body><h1>CWP</h1><script src='assets/js/app.js'></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>City Welcome Planner – London</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <!-- Top bar / navigation -->
+  <header class="top-bar">
+    <div class="logo-title">
+      <img src="assets/images/cwp-logo.png" alt="CityWP logo" class="logo" />
+      <div class="app-title">
+        <span class="brand">CityWP</span>
+        <span class="tagline">City Welcome Planner – London</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#welcome">Welcome</a>
+      <a href="#airports">Airports</a>
+      <a href="#attractions">Attractions</a>
+      <a href="#museums">Museums</a>
+      <a href="#family">Family</a>
+      <a href="#parks">Parks</a>
+      <a href="#shopping">Shopping</a>
+      <a href="#emergency">Emergency</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle">☰</button>
+  </header>
+
+  <!-- Hero / welcome banner -->
+  <section class="hero" id="top">
+    <div class="hero-image" style="background-image:url('assets/images/london-hero.jpg');"></div>
+    <div class="hero-overlay">
+      <h1>City Welcome Pack – London</h1>
+      <p>Your offline-friendly guide to airports, transport, landmarks, shopping and emergency help in London.</p>
+    </div>
+  </section>
+
+  <main class="page">
+    <!-- WELCOME SECTION -->
+    <section id="welcome" class="section">
+      <h2>Welcome to London</h2>
+      <p>
+        London is the capital of England and the United Kingdom. The city is filled with
+        historic landmarks, world-class museums, beautiful parks and amazing food from
+        all over the world.
+      </p>
+
+      <div class="grid two">
+        <div class="card">
+          <h3>Key City Info</h3>
+          <ul class="info-list">
+            <li><strong>Currency:</strong> British Pound Sterling (£)</li>
+            <li><strong>Country code:</strong> +44 (0)</li>
+            <li><strong>Time zone:</strong> GMT / BST in summer</li>
+            <li><strong>Plugs:</strong> Type G, 3-pin</li>
+            <li><strong>Transport:</strong> TfL – Underground, Overground, DLR, buses, trains</li>
+            <li><strong>Payment:</strong> Contactless card, phone pay, or Oyster</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>How CityWP Helps You</h3>
+          <ul class="info-list">
+            <li>Clear airport → London transport options</li>
+            <li>Top attractions & landmarks by category</li>
+            <li>Museum and family activity ideas</li>
+            <li>Parks & gardens for relaxing days</li>
+            <li>Shopping areas and tips</li>
+            <li>Emergency numbers & embassy details</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- AIRPORTS -->
+    <section id="airports" class="section">
+      <h2>Airports & Transport to Central London</h2>
+      <p class="section-intro">
+        London is served by several airports. Below are example options for trains from each airport into London.
+        Always check live prices & times before you travel.
+      </p>
+
+      <div class="grid two">
+        <!-- Heathrow -->
+        <article class="card airport-card">
+          <header class="airport-header heathrow">
+            <h3>Heathrow (LHR)</h3>
+            <p class="airport-sub">West London – Underground + fast trains</p>
+          </header>
+          <img src="assets/images/airport-heathrow.jpg" alt="Heathrow airport transport card" class="card-image" />
+          <div class="airport-body">
+            <h4>Heathrow Express</h4>
+            <p><strong>From:</strong> London Paddington station</p>
+            <p><strong>To:</strong> Heathrow Terminals</p>
+            <p><strong>Approx. duration:</strong> 15–20 minutes</p>
+
+            <h4>Piccadilly line (Tube)</h4>
+            <p><strong>From:</strong> Central London Underground</p>
+            <p><strong>To:</strong> All Heathrow terminals</p>
+            <p><strong>Approx. duration:</strong> ~50 minutes</p>
+
+            <p class="note">Example information based on your printed guide – please update with current prices before publishing.</p>
+          </div>
+        </article>
+
+        <!-- Gatwick -->
+        <article class="card airport-card">
+          <header class="airport-header gatwick">
+            <h3>Gatwick (LGW)</h3>
+            <p class="airport-sub">South of London – Victoria & London Bridge</p>
+          </header>
+          <img src="assets/images/airport-gatwick.jpg" alt="Gatwick airport transport card" class="card-image" />
+          <div class="airport-body">
+            <h4>Gatwick Express</h4>
+            <p><strong>From:</strong> London Victoria</p>
+            <p><strong>To:</strong> Gatwick Airport</p>
+            <p><strong>Approx. duration:</strong> 30–35 minutes</p>
+
+            <h4>Southern / Thameslink</h4>
+            <p><strong>From:</strong> Victoria / London Bridge / St Pancras</p>
+            <p><strong>To:</strong> Gatwick Airport</p>
+            <p><strong>Approx. duration:</strong> 30–40 minutes</p>
+
+            <p class="note">Example only – confirm timetable and prices with the train operator.</p>
+          </div>
+        </article>
+
+        <!-- Luton -->
+        <article class="card airport-card">
+          <header class="airport-header luton">
+            <h3>Luton (LTN)</h3>
+            <p class="airport-sub">North of London – Thameslink</p>
+          </header>
+          <img src="assets/images/airport-luton.jpg" alt="Luton airport transport card" class="card-image" />
+          <div class="airport-body">
+            <h4>East Midlands / Thameslink</h4>
+            <p><strong>From:</strong> London Blackfriars, City Thameslink, Farringdon, St Pancras</p>
+            <p><strong>To:</strong> Luton Airport Parkway + shuttle bus</p>
+            <p><strong>Approx. duration:</strong> 25–35 minutes + shuttle</p>
+          </div>
+        </article>
+
+        <!-- Stansted & City -->
+        <article class="card airport-card">
+          <header class="airport-header stansted">
+            <h3>Stansted (STN) &amp; City (LCY)</h3>
+            <p class="airport-sub">North-East & East London</p>
+          </header>
+          <img src="assets/images/airport-stansted-city.jpg" alt="Stansted and City airport transport card" class="card-image" />
+          <div class="airport-body">
+            <h4>Stansted Express</h4>
+            <p><strong>From:</strong> London Liverpool Street</p>
+            <p><strong>To:</strong> Stansted Airport</p>
+            <p><strong>Approx. duration:</strong> ~45 minutes</p>
+
+            <h4>London City (LCY)</h4>
+            <p><strong>From:</strong> Bank / Tower Gateway via DLR</p>
+            <p><strong>To:</strong> London City Airport</p>
+            <p><strong>Approx. duration:</strong> ~30–35 minutes</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ATTRACTIONS -->
+    <section id="attractions" class="section">
+      <h2>Attractions & Landmarks</h2>
+      <div class="grid three">
+        <article class="card">
+          <h3>Big Ben & Westminster</h3>
+          <p>Iconic clock tower, Parliament and Westminster Abbey by the River Thames.</p>
+          <p><strong>Nearest Tube:</strong> Westminster (Circle, District, Jubilee)</p>
+          <p><strong>Good for:</strong> Photos, history, river walks</p>
+        </article>
+
+        <article class="card">
+          <h3>London Eye</h3>
+          <p>Observation wheel with panoramic views across central London.</p>
+          <p><strong>Nearest Tube:</strong> Waterloo / Westminster</p>
+          <p><strong>Tip:</strong> Book online to avoid queues.</p>
+        </article>
+
+        <article class="card">
+          <h3>Tower of London & Tower Bridge</h3>
+          <p>Medieval fortress, Crown Jewels and one of London’s most famous bridges.</p>
+          <p><strong>Nearest Tube:</strong> Tower Hill</p>
+          <p><strong>Good for:</strong> Families, history fans.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- MUSEUMS -->
+    <section id="museums" class="section">
+      <h2>Museums</h2>
+      <div class="grid three">
+        <article class="card">
+          <h3>British Museum</h3>
+          <p>World art and artefacts – many galleries free.</p>
+          <p><strong>Nearest Tube:</strong> Holborn / Tottenham Court Road</p>
+        </article>
+        <article class="card">
+          <h3>Natural History Museum</h3>
+          <p>Dinosaurs, blue whale, volcanoes & more.</p>
+          <p><strong>Nearest Tube:</strong> South Kensington</p>
+        </article>
+        <article class="card">
+          <h3>Science Museum & V&amp;A</h3>
+          <p>Interactive science exhibits and design / fashion collections.</p>
+          <p><strong>Nearest Tube:</strong> South Kensington</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAMILY -->
+    <section id="family" class="section">
+      <h2>Family Activities</h2>
+      <div class="grid two">
+        <article class="card">
+          <h3>Family Favourites</h3>
+          <ul class="info-list">
+            <li>Sea Life London Aquarium (South Bank)</li>
+            <li>London Zoo (Regent’s Park)</li>
+            <li>Shrek’s Adventure / London Dungeon (South Bank)</li>
+            <li>Harry Potter Studio Tour (Watford – book ahead)</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Tips with Kids</h3>
+          <ul class="info-list">
+            <li>Use contactless/Oyster – kids under certain ages travel free on buses & Tube (check rules).</li>
+            <li>Plan toilet & snack stops around big stations and museums.</li>
+            <li>Keep an eye on closing times – many attractions close around 17:00–18:00.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- PARKS -->
+    <section id="parks" class="section">
+      <h2>Parks & Gardens</h2>
+      <div class="grid three">
+        <article class="card">
+          <h3>Hyde Park & Kensington Gardens</h3>
+          <p>Huge central park for walks, cycling and boating on the Serpentine.</p>
+          <p><strong>Nearest Tube:</strong> Hyde Park Corner / Lancaster Gate</p>
+        </article>
+        <article class="card">
+          <h3>Regent’s Park & Primrose Hill</h3>
+          <p>Gardens, London Zoo and a hilltop view of the skyline.</p>
+          <p><strong>Nearest Tube:</strong> Baker Street / Regent’s Park</p>
+        </article>
+        <article class="card">
+          <h3>Greenwich Park</h3>
+          <p>Royal Observatory, meridian line and views over Canary Wharf.</p>
+          <p><strong>Nearest:</strong> Greenwich rail / DLR</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SHOPPING -->
+    <section id="shopping" class="section">
+      <h2>Shopping Areas</h2>
+      <div class="grid three">
+        <article class="card">
+          <h3>Oxford Street & Regent Street</h3>
+          <p>Flagship high-street shops and famous department stores.</p>
+          <p><strong>Nearest Tube:</strong> Oxford Circus / Bond Street / Tottenham Court Road</p>
+        </article>
+        <article class="card">
+          <h3>Covent Garden</h3>
+          <p>Boutiques, market stalls, street performers and restaurants.</p>
+          <p><strong>Nearest Tube:</strong> Covent Garden / Leicester Square</p>
+        </article>
+        <article class="card">
+          <h3>Westfield (Stratford & Shepherd’s Bush)</h3>
+          <p>Large indoor malls with fashion, food courts and cinemas.</p>
+          <p><strong>Nearest:</strong> Stratford / Shepherd’s Bush</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- EMERGENCY -->
+    <section id="emergency" class="section emergency-section">
+      <h2>Emergency & Embassy Help</h2>
+
+      <div class="grid two">
+        <article class="card">
+          <h3>UK Emergency Numbers</h3>
+          <ul class="info-list">
+            <li><strong>999</strong> – Police, Ambulance, Fire (emergency only)</li>
+            <li><strong>112</strong> – European emergency number (works in UK)</li>
+            <li><strong>111</strong> – Medical help, not life-threatening</li>
+            <li><strong>101</strong> – Non-emergency police</li>
+          </ul>
+          <p class="note">If in doubt about danger to life, property or someone’s safety, call 999.</p>
+        </article>
+
+        <article class="card">
+          <h3>Example Embassy – Canada</h3>
+          <img src="assets/images/embassy-canada-front.jpg"
+               alt="CityWP Canadian embassy card front"
+               class="card-image" />
+          <p><strong>Telephone:</strong> 020 7004 6000</p>
+          <p><strong>Opening hours:</strong> Monday–Friday, 08:00–16:00</p>
+          <p><strong>Nearest Underground:</strong> Charing Cross, Piccadilly Circus, Leicester Square</p>
+          <p><strong>Address:</strong> Canada House, 5 Trafalgar Square, London, SW1Y 5BJ</p>
+          <p class="note">You can add more embassies in the app later – one card per country.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>CityWP – City Welcome Planner • London edition</p>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
