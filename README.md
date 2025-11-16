@@ -15,7 +15,7 @@ Real-time Readiness: Provides immediate links and contact information, essential
 This guide is a single-file Progressive Web Application (PWA) built using HTML, Tailwind CSS, and vanilla JavaScript.
 
 To view the live site, ensure GitHub Pages is enabled on the main branch. The site will be available at:
-https://khalafandrew-prog.github.io/YOUR-REPOSITORY-NAME/
+[https://khalafandrew-prog.github.io/YOUR-REPOSITORY-NAME/](https://khalafandrew-prog.github.io/CityWelcomePlanner/)
 
 🛠️ Technology Stack
 
