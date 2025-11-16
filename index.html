@@ -1,184 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>CityWP – City Welcome Planner – London</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityWP: London Traveler's Hub</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Define the brand colors and font */
+        :root {
+            --color-brand-navy: rgb(0, 35, 102);
+            --color-accent-red: #E32017; /* Emergency / Fast */
+            --color-accent-green: #008744; /* Parks / Budget */
+            --color-accent-purple: #9B0056; /* Entertainment */
+        }
+
+        /* Custom utility classes for the design */
+        .bg-brand-navy { background-color: var(--color-brand-navy); }
+        .text-brand-navy { color: var(--color-brand-navy); }
+        .border-brand-navy { border-color: var(--color-brand-navy); }
+        .bg-accent-red { background-color: var(--color-accent-red); }
+        .text-accent-red { color: var(--color-accent-red); }
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        /* Smooth page transitions for PWA feel */
+        .content-transition {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Sticky header and navigation */
+        #header {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        #nav-bar {
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Utility to make CTAs look actionable */
+        .action-icon {
+            transform: translateY(0);
+            transition: transform 0.1s ease-out;
+        }
+        .action-icon:active {
+            transform: translateY(2px);
+        }
+    </style>
 </head>
-<body>
-  <!-- Top bar with logo + login -->
-  <header class="topbar">
-    <div class="brand">
-      <img src="images/cwp-logo.jpg" alt="CityWP logo" class="brand-logo" />
-      <div class="brand-text">
-        <div class="brand-title">CityWP</div>
-        <div class="brand-subtitle">City Welcome Planner – London</div>
-      </div>
-    </div>
-    <div class="user-area">
-      <span id="welcomeUser" class="welcome-user"></span>
-      <button id="loginBtn" class="btn btn-outline-light">Log in / Sign up</button>
-    </div>
-  </header>
 
-  <!-- Navigation -->
-  <nav class="main-nav">
-    <button data-section="welcome" class="nav-link active">Welcome</button>
-    <button data-section="airports" class="nav-link">Airports</button>
-    <button data-section="attractions" class="nav-link">Attractions</button>
-    <button data-section="museums" class="nav-link">Museums</button>
-    <button data-section="family" class="nav-link">Family</button>
-    <button data-section="parks" class="nav-link">Parks &amp; Gardens</button>
-    <button data-section="shopping" class="nav-link">Shopping</button>
-    <button data-section="emergency" class="nav-link">Emergency &amp; Embassies</button>
-    <button data-section="deals" class="nav-link nav-link-accent">Deals &amp; Memberships</button>
-  </nav>
-
-  <main class="page">
-    <!-- WELCOME -->
-    <section id="welcome" class="section active">
-      <div class="welcome-hero">
-        <div class="welcome-hero-content">
-          <p class="hero-kicker">City Welcome Pack – London</p>
-          <h1>Your travel-friendly pocket guide to London</h1>
-          <p class="hero-text">
-            Offline-friendly guide to airports, transport, landmark highlights, shopping areas and emergency help in London.
-          </p>
-          <ul class="hero-bullets">
-            <li>Understand London at a glance: currency, plugs, transport &amp; safety</li>
-            <li>Plan days out by category: attractions, museums, parks, family, shopping</li>
-            <li>Always know who to call: emergency numbers &amp; embassy details</li>
-          </ul>
+<body class="bg-gray-50 font-inter text-gray-800">
+    <!-- Header: Sticky, Brand Logo, and Login/Auth -->
+    <header id="header" class="sticky top-0 z-20 bg-brand-navy text-white p-3 shadow-lg">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="navigate('home')">
+                <!-- Simplified Logo Icon (Human/City Skyline) -->
+                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16H8V8h3v10zm4 0h-3V8h3v10zm3.5-6h-2v-2h2v2z"/>
+                </svg>
+                <span class="text-xl font-bold tracking-tight">CityWP</span>
+            </div>
+            <button class="px-3 py-1 bg-white text-brand-navy rounded-full text-sm font-semibold hover:bg-gray-100 transition-colors">Log In</button>
         </div>
-      </div>
+    </header>
 
-      <div class="card-grid">
-        <article class="info-card">
-          <h2>About London</h2>
-          <p>
-            London is the capital of England and the United Kingdom. The city is filled with historic landmarks,
-            world-class museums, beautiful parks and amazing food from all over the world.
-          </p>
-          <p>
-            With great public transportation (TfL) it’s easy to move around the city and reach its attractions,
-            museums, shopping districts, and neighbourhoods.
-          </p>
-        </article>
+    <!-- Main Content Area -->
+    <main id="content" class="max-w-4xl mx-auto p-4 md:p-6 content-transition"></main>
 
-        <article class="info-card">
-          <h2>Key City Info</h2>
-          <dl class="key-info">
-            <div><dt>Currency</dt><dd>British Pound Sterling (£)</dd></div>
-            <div><dt>Country code</dt><dd>+44 (0)</dd></div>
-            <div><dt>Time zone</dt><dd>GMT / BST in summer</dd></div>
-            <div><dt>Plugs</dt><dd>Type G, 3-pin</dd></div>
-            <div><dt>Transport</dt><dd>TfL – Underground, Overground, DLR, buses, trains</dd></div>
-            <div><dt>Payment</dt><dd>Contactless card, phone pay, or Oyster</dd></div>
-          </dl>
-        </article>
+    <!-- Bottom Navigation Bar (Mobile-first, for quick access) -->
+    <nav id="nav-bar" class="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-gray-200">
+        <div class="max-w-4xl mx-auto flex justify-around items-center h-16">
+            <button onclick="navigate('home')" class="nav-button flex flex-col items-center justify-center p-2 text-brand-navy active-nav">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span class="text-xs font-medium">Home</span>
+            </button>
+            <button onclick="navigate('transport')" class="nav-button flex flex-col items-center justify-center p-2 text-gray-500 hover:text-brand-navy">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M21 17h-2v-4h2v4zm-4 0H7v-4h10v4zm-6-2h2v2h-2v-2zM4 17H3v-4h1v4zm15-8h-2V7h2v2zm-4 0H7V7h10v2zm-6-2h2v2h-2V7zM4 9H3V7h1v2zM2 20h20v-2H2v2z"/></svg>
+                <span class="text-xs font-medium">Transport</span>
+            </button>
+            <button onclick="navigate('attractions')" class="nav-button flex flex-col items-center justify-center p-2 text-gray-500 hover:text-brand-navy">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-14h2v2h-2v-2zm0 4h2v8h-2V8z"/></svg>
+                <span class="text-xs font-medium">Discover</span>
+            </button>
+            <button onclick="navigate('emergency')" class="nav-button flex flex-col items-center justify-center p-2 text-gray-500 hover:text-brand-navy">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4 22h16L12 2zm1 17h-2v-2h2v2zm0-4h-2V9h2v6z"/></svg>
+                <span class="text-xs font-medium">Essentials</span>
+            </button>
+        </div>
+    </nav>
 
-        <article class="info-card">
-          <h2>How CityWP Helps You</h2>
-          <ul class="bullet-list">
-            <li>Clear airport → London transport options</li>
-            <li>Top attractions &amp; landmarks by category</li>
-            <li>Museum and family-friendly ideas</li>
-            <li>Parks &amp; gardens for relaxing days</li>
-            <li>Shopping areas, tips and opening info</li>
-            <li>Emergency numbers &amp; embassy details</li>
-          </ul>
-        </article>
-      </div>
-    </section>
+    <script>
+        // --- 1. DATA DEFINITION ---
+        const NAVY = 'rgb(0, 35, 102)';
+        const RED = '#E32017';
+        const GREEN = '#008744';
+        const PURPLE = '#9B0056';
 
-    <!-- AIRPORTS -->
-    <section id="airports" class="section">
-      <header class="section-header">
-        <h2>Airports &amp; Transport to Central London</h2>
-        <p>Boarding-pass style cards show typical train options from each airport into London. Always check live prices and times before you travel.</p>
-      </header>
+        const APP_DATA = {
+            // Placeholder data for the new structure, based on your files
+            transport: [
+                { id: 'LHR', airport: 'Heathrow', code: 'LHR', image: 'https://placehold.co/600x200/003399/ffffff?text=Heathrow', options: [
+                    { name: 'Heathrow Express', color: NAVY, time: '15-20 mins', price: 'From £22', label: 'Fastest' },
+                    { name: 'TfL Rail', color: GREEN, time: '30-50 mins', price: 'From £10', label: 'Balanced' },
+                    { name: 'Piccadilly Line', color: PURPLE, time: '50 mins', price: 'From £6.00', label: 'Budget' }
+                ]},
+                { id: 'LGW', airport: 'Gatwick', code: 'LGW', image: 'https://placehold.co/600x200/800080/ffffff?text=Gatwick', options: [
+                    { name: 'Gatwick Express', color: PURPLE, time: '30-35 mins', price: 'From £17', label: 'Fastest' },
+                    { name: 'Southern Train', color: NAVY, time: '30-35 mins', price: 'From £15', label: 'Balanced' },
+                    { name: 'Thameslink', color: GREEN, time: '30-45 mins', price: 'From £10', label: 'Budget' }
+                ]},
+                { id: 'LTN', airport: 'Luton', code: 'LTN', image: 'https://placehold.co/600x200/38761d/ffffff?text=Luton', options: [
+                    { name: 'East Midlands Train', color: GREEN, time: '25 mins', price: 'From £27.50', label: 'Fastest' },
+                    { name: 'Thameslink', color: NAVY, time: '35 mins', price: 'From £15.70', label: 'Budget' }
+                ]},
+                { id: 'STN', airport: 'Stansted', code: 'STN', image: 'https://placehold.co/600x200/990000/ffffff?text=Stansted', options: [
+                    { name: 'Stansted Express', color: RED, time: '45 mins', price: 'From £16.00', label: 'Fastest' }
+                ]},
+                { id: 'LCY', airport: 'City', code: 'LCY', image: 'https://placehold.co/600x200/FFCC00/000000?text=City+Airport', options: [
+                    { name: 'DLR', color: NAVY, time: '35 mins', price: 'From £3.30', label: 'Direct' }
+                ]}
+            ],
+            attractions: [
+                { id: 'BigBen', name: 'Big Ben & Parliament', transport: 'Westminster Station', price: '£26.50 (Adult Tour)', image: 'https://placehold.co/400x250/002366/ffffff?text=Big+Ben' },
+                { id: 'Harrods', name: 'Harrods', transport: 'Knightsbridge Station', price: 'Free Entry', image: 'https://placehold.co/400x250/228B22/ffffff?text=Harrods' },
+                { id: 'Tussauds', name: 'Madame Tussauds', transport: 'Baker Street Station', price: '£30.00 (Adult)', image: 'https://placehold.co/400x250/9B0056/ffffff?text=Madame+Tussauds' }
+            ],
+            emergency: {
+                numbers: [
+                    { num: '999', name: 'Emergency (Police, Ambulance, Fire)', color: RED, icon: '⚡' },
+                    { num: '111', name: 'Medical Help (Non-Emergency)', color: NAVY, icon: '⚕️' }
+                ],
+                embassy: {
+                    name: 'Canada House',
+                    address: '5 Trafalgar Square, London, SW1 5BJ',
+                    phone: '020 7004 6000',
+                    hours: 'Mon-Fri, 08:00 am – 16:00 pm'
+                }
+            }
+        };
 
-      <div class="airport-grid">
-        <!-- Heathrow -->
-        <article class="boarding-pass">
-          <header class="bp-header bp-heathrow">
-            <div>
-              <h3>Heathrow (LHR)</h3>
-              <p>West London • Underground + fast trains</p>
-            </div>
-            <span class="bp-tag">Airport Express</span>
-          </header>
-          <div class="bp-body">
-            <div class="bp-row">
-              <div>
-                <h4>Heathrow Express</h4>
-                <p>From London Paddington → Heathrow Terminals</p>
-              </div>
-              <div class="bp-meta">
-                <span class="bp-label">Duration</span>
-                <span class="bp-value">15–20 min</span>
-              </div>
-            </div>
-            <ul class="bp-list">
-              <li><strong>Typical single</strong>: from ~£22 (check live fares)</li>
-              <li><strong>Payment</strong>: Bank card, contactless or dedicated ticket</li>
-              <li><strong>Good for</strong>: Fastest option with luggage</li>
-            </ul>
-          </div>
-          <footer class="bp-footer">
-            <span>Zone 1–6</span>
-            <span>From: Paddington</span>
-            <span>To: Heathrow Terminals</span>
-          </footer>
-        </article>
+        let currentPage = 'home';
+        const contentDiv = document.getElementById('content');
+        const navButtons = document.querySelectorAll('.nav-button');
 
-        <!-- Gatwick -->
-        <article class="boarding-pass">
-          <header class="bp-header bp-gatwick">
-            <div>
-              <h3>Gatwick (LGW)</h3>
-              <p>South of London • Fast &amp; frequent trains</p>
-            </div>
-            <span class="bp-tag">Airport Express</span>
-          </header>
-          <div class="bp-body">
-            <div class="bp-row">
-              <div>
-                <h4>Gatwick Express</h4>
-                <p>Victoria → Gatwick Airport</p>
-              </div>
-              <div class="bp-meta">
-                <span class="bp-label">Duration</span>
-                <span class="bp-value">30–35 min</span>
-              </div>
-            </div>
-            <ul class="bp-list">
-              <li>Non-stop, dedicated airport service.</li>
-              <li>Standard and off-peak fares – check live prices.</li>
-            </ul>
-          </div>
-          <footer class="bp-footer">
-            <span>From: Victoria</span>
-            <span>To: All terminals</span>
-          </footer>
-        </article>
+        // --- 2. ROUTING AND RENDERING ---
 
-        <!-- Luton -->
-        <article class="boarding-pass">
-          <header class="bp-header bp-luton">
-            <div>
-              <h3>Luton (LTN)</h3>
-              <p>North of London • Train + shuttle bus</p>
-            </div>
-            <span class="bp-tag">Train + Shuttle</span>
-          </header>
-          <div class="bp-body">
-            <div class="bp-row">
-              <div>
-                <h4>Thameslink / East Midlands</h4>
-                <p>Central London → Luton Airport Parkway + shuttle</p>
-              </div>
-              <div class="bp-meta">
-                <span class="bp-label">Duration</span>
+        /** Updates the URL hash and calls the appropriate renderer. */
+        function navigate(pageId) {
+            if (pageId === currentPage) return;
+            
+            currentPage = pageId;
+            window.location.hash = `#${pageId}`;
+            renderPage(pageId);
+        }
+
+        /** Handles rendering content based on the current page. */
+        function renderPage(pageId) {
+            contentDiv.style.opacity = '0'; // Start transition fade-out
+
+            setTimeout(() => {
+                let html = '';
+                switch (pageId) {
+                    case 'home':
+                        html = renderHome();
+                        break;
+                    case 'transport':
+                        html = renderTransport();
+                        break;
+                    case 'attractions':
+                        html = renderAttractions();
+                        break;
+                    case 'emergency':
+                        html = renderEmergency();
+                        break;
+                    default:
+                        html = renderHome(); // Default to home on unknown state
+                        break;
+                }
+                contentDiv.innerHTML = html;
+                contentDiv.style.opacity = '1'; // End transition fade-in
+                updateActiveNav(pageId);
+            }, 300); // Match CSS transition duration
+        }
+
+        /** Updates the visual state of the bottom navigation bar. */
+        function updateActiveNav(pageId) {
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-brand-navy', 'active-nav');
+                btn.classList.add('text-gray-500', 'hover:text-brand-navy');
+                if (btn.getAttribute('onclick').includes(`'${pageId}'`)) {
+                    btn.classList.add('text-brand-navy', 'active-nav');
+                    btn.classList.remove('text-gray-500');
+                }
+            });
+        }
+
+        // Initial load check
+        window.addEventListener('load', () => {
+            const initialPage = window.location.hash.substring(1) || 'home';
+            // Use navigate() to correctly set hash and render
+            navigate(initialPage); 
+        });
+
+        // --- 3. PAGE RENDER FUNCTIONS ---
+
+        function renderHome() {
+            return `
+                <!-- Hero Section with Search and High Impact Image -->
+                <div class="relative h-64 sm:h-80 w-full overflow-hidden rounded-xl shadow-lg mb-8">
+                    <img src="https://placehold.co/800x600/000000/ffffff?text=Iconic+London+Skyline" alt="London at sunset" class="absolute inset-0 w-full h-full object-cover opacity-80">
+                    <div class="absolute inset-0 bg-brand-navy/30"></div>
+                    <div class="absolute inset-0 flex flex-col justify-center items-center p-4 text-center">
+                        <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg">
+                            CITY WELCOME PLANNER
+                        </h1>
+                        <p class="text-white text-base sm:text-lg font-medium">Your trusted guide to London.</p>
+                    </div>
+                </div>
+
+                <!-- Action Hub: 4 Primary Icon Links -->
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    ${renderActionButton('Transport', 'plane-departure', 'transport', 'bg-brand-navy')}
+                    ${renderActionButton('Attractions', 'landmark', 'attractions', 'bg-brand-navy')}
+                    ${renderActionButton('Essentials', 'shield-heart', 'emergency', 'bg-accent-red')}
+                    ${renderActionButton('Shopping', 'bag-shopping', 'attractions', 'bg-brand-navy', true)}
+                </div>
+
+                <!-- Key Facts Card (Currency, Plugs, Code) -->
+                <div class="p-5 bg-white rounded-xl shadow-md border-t-4 border-brand-navy">
+                    <h2 class="text-xl font-bold mb-3 text-brand-navy">Good to Know</h2>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center"><span class="text-lg mr-2">💷</span>Uses **British Sterling Pound (£)**.</li>
+                        <li class="flex items-center"><span class="text-lg mr-2">🔌</span>Plugs are **3-pin (Type G)**.</li>
+                        <li class="flex items-center"><span class="text-lg mr-2">📞</span>Country Code is **+44 (0)**.</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function renderActionButton(title, iconPath, page, color, shopping = false) {
+            // Placeholder SVG icon path
+            const iconSvg = shopping 
+                ? `<svg class="w-10 h-10 fill-current" viewBox="0 0 24 24"><path d="M18.5 7h-11a.5.5 0 00-.495.433l-1.5 8a.5.5 0 00.495.567h13a.5.5 0 00.495-.567l-1.5-8a.5.5 0 00-.495-.433zM7 7.5h10l1.25 6.667H5.75L7 7.5zM7 17.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm10 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>`
+                : `<svg class="w-10 h-10 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-14h2v2h-2v-2zm0 4h2v8h-2V8z"/></svg>`;
+
+            return `
+                <button onclick="navigate('${page}')" class="action-icon ${color} text-white p-6 rounded-xl shadow-xl hover:shadow-2xl flex flex-col items-center justify-center transition-all duration-300">
+                    <div class="mb-2">${iconSvg.replace(/24/g, '48')}</div>
+                    <span class="text-lg font-bold">${title}</span>
+                </button>
+            `;
+        }
+
+
+        function renderTransport() {
+            const airportCards = APP_DATA.transport.map(airport => `
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-t-8 border-brand-navy mb-6">
+                    <!-- Card Header -->
+                    <div class="flex items-center justify-between p-4 bg-brand-navy text-white">
+                        <h2 class="text-2xl font-extrabold flex items-center">
+                            <span class="text-xl mr-2">✈️</span> ${airport.airport} <span class="ml-2 px-2 py-0.5 bg-white/20 rounded text-sm">${airport.code}</span>
+                        </h2>
+                        <span class="text-sm font-medium">To Central London</span>
+                    </div>
+
+                    <!-- Transport Options Comparison -->
+                    <div class="p-4 space-y-3">
+                        ${airport.options.map(option => `
+                            <div class="border border-gray-200 p-3 rounded-lg flex justify-between items-center transition-shadow hover:shadow-md">
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-semibold mb-1" style="color: ${option.color};">${option.name}</span>
+                                    <div class="flex items-center space-x-3 text-sm text-gray-600">
+                                        <div class="flex items-center">
+                                            <span class="font-bold mr-1">Time:</span> ${option.time}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="font-bold mr-1">Price:</span> ${option.price}
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="px-3 py-1 text-xs font-bold text-white rounded-full" style="background-color: ${option.color};">${option.label}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- CTA to Live Fares -->
+                    <div class="p-4 pt-0">
+                        <button class="w-full py-3 bg-brand-navy text-white font-bold rounded-lg shadow-md hover:bg-opacity-90 transition-colors">
+                            Check Live Fares & Schedules (External Link) &rarr;
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            return `
+                <h1 class="text-3xl font-extrabold text-brand-navy mb-6">Transport Hub</h1>
+                <p class="mb-6 text-gray-600">Find the fastest and cheapest ways to get from London's major airports to the city center.</p>
+                ${airportCards}
+            `;
+        }
+
+        function renderAttractions() {
+            const attractionCards = APP_DATA.attractions.map(attraction => `
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                    <img src="${attraction.image}" alt="${attraction.name}" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-brand-navy mb-2">${attraction.name}</h3>
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-3">
+                            <span class="flex items-center"><span class="mr-1">🚇</span> ${attraction.transport}</span>
+                            <span class="font-bold text-gray-800">${attraction.price}</span>
+                        </div>
+                        <button class="w-full py-2 bg-brand-navy text-white text-sm font-semibold rounded-lg hover:bg-opacity-90 transition-colors">
+                            View Details & Navigate
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            return `
+                <h1 class="text-3xl font-extrabold text-brand-navy mb-6">Discover London</h1>
+                <p class="mb-6 text-gray-600">Explore must-see landmarks, museums, and shopping destinations.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    ${attractionCards}
+                </div>
+            `;
+        }
+
+        function renderEmergency() {
+            const embassy = APP_DATA.emergency.embassy;
+
+            const emergencyNumbers = APP_DATA.emergency.numbers.map(item => `
+                <div class="p-5 rounded-xl shadow-xl border-4 border-dashed mb-4" style="border-color: ${item.color}; background-color: ${item.color}10;">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-5xl font-extrabold" style="color: ${item.color};">${item.num}</span>
+                        <span class="text-4xl" style="color: ${item.color};">${item.icon}</span>
+                    </div>
+                    <p class="text-lg font-semibold text-gray-800">${item.name}</p>
+                    <button class="mt-4 w-full py-3 text-white font-bold rounded-lg transition-all hover:bg-opacity-90" style="background-color: ${item.color};" onclick="window.location.href='tel:${item.num}'">
+                        CALL ${item.num} NOW
+                    </button>
+                </div>
+            `).join('');
+
+
+            return `
+                <h1 class="text-3xl font-extrabold text-accent-red mb-6">Essentials & Safety</h1>
+                <p class="mb-6 text-gray-600">Your safety is our priority. These numbers are critical.</p>
+
+                <!-- Emergency Numbers Section -->
+                <div class="space-y-6 mb-10">
+                    ${emergencyNumbers}
+                </div>
+
+                <!-- Embassy Contacts Card (Example: Canada) -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden p-6 border-l-8 border-brand-navy">
+                    <h2 class="text-2xl font-bold text-brand-navy mb-4 flex items-center">
+                        <span class="text-xl mr-2">🇨🇦</span> ${embassy.name} Embassy
+                    </h2>
+
+                    <div class="space-y-3 text-gray-700">
+                        <div class="flex items-start">
+                            <span class="text-lg mr-3 text-brand-navy">📍</span>
+                            <p>${embassy.address} <button class="text-sm text-blue-500 font-medium ml-2 hover:underline" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(embassy.address)}', '_blank')">[Map]</button></p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-lg mr-3 text-brand-navy">📞</span>
+                            <p>${embassy.phone}</p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-lg mr-3 text-brand-navy">⏰</span>
+                            <p>${embassy.hours}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4 mt-6">
+                        <button class="flex-1 py-3 bg-brand-navy text-white font-bold rounded-lg shadow-md hover:bg-opacity-90 transition-colors" onclick="window.location.href='tel:${embassy.phone}'">
+                            Call Embassy
+                        </button>
+                        <button class="flex-1 py-3 bg-gray-200 text-brand-navy font-bold rounded-lg shadow-md hover:bg-gray-300 transition-colors" onclick="window.open('https://www.gov.uk/world/organisations/high-commission-of-canada-in-the-united-kingdom', '_blank')">
+                            Website
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
