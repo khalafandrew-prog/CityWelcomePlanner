@@ -1,53 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>CityWP – City Welcome Planner | London</title>
+  <meta charset="UTF-8" />
+  <title>CityWP – City Welcome Planner – London</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#002366" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="top-bar">
     <div class="brand">
-      <!-- You can later swap this text for your real logo image -->
-      <span class="logo-mark">City<span class="logo-tower">WP</span></span>
-      <span class="tagline">City Welcome Planner – London</span>
+      <!-- If you upload your logo as citywp-logo.png, it will show here -->
+      <!-- <img src="citywp-logo.png" alt="CityWP logo" class="logo" /> -->
+      <span class="brand-main">City<span class="brand-accent">WP</span></span>
+      <span class="brand-sub">City Welcome Planner – London</span>
     </div>
-
-    <nav class="main-nav">
-      <button class="nav-link active" data-target="welcome">Welcome</button>
-      <button class="nav-link" data-target="airports">Airports</button>
-      <button class="nav-link" data-target="attractions">Attractions</button>
-      <button class="nav-link" data-target="museums">Museums</button>
-      <button class="nav-link" data-target="family">Family</button>
-      <button class="nav-link" data-target="parks">Parks &amp; Gardens</button>
-      <button class="nav-link" data-target="shopping">Shopping</button>
-      <button class="nav-link" data-target="emergency">Emergency</button>
+    <nav class="nav-tabs">
+      <button data-section="welcome" class="tab active">Welcome</button>
+      <button data-section="airports" class="tab">Airports</button>
+      <button data-section="attractions" class="tab">Attractions</button>
+      <button data-section="museums" class="tab">Museums</button>
+      <button data-section="family" class="tab">Family</button>
+      <button data-section="parks" class="tab">Parks & Gardens</button>
+      <button data-section="shopping" class="tab">Shopping</button>
+      <button data-section="emergency" class="tab">Emergency & Embassies</button>
     </nav>
   </header>
 
-  <main>
-    <!-- WELCOME SECTION -->
-    <section id="welcome" class="page-section active">
-      <div class="hero-card">
+  <main class="page">
+    <!-- WELCOME -->
+    <section id="welcome" class="section visible">
+      <div class="card welcome-card">
         <h1>City Welcome Pack – London</h1>
-        <p class="subtext">
+        <p class="tagline">
           Your offline-friendly guide to airports, transport, landmarks, shopping and emergency help in London.
         </p>
 
-        <div class="key-grid">
+        <div class="welcome-grid">
           <div>
-            <h3>About London</h3>
+            <h2>About London</h2>
             <p>
               London is the capital of England and the United Kingdom. The city is filled with historic landmarks,
               world-class museums, beautiful parks and amazing food from all over the world.
             </p>
           </div>
+
           <div>
-            <h3>Key City Info</h3>
-            <ul class="info-list">
+            <h2>Key City Info</h2>
+            <ul class="key-list">
               <li><strong>Currency:</strong> British Pound Sterling (£)</li>
               <li><strong>Country code:</strong> +44 (0)</li>
               <li><strong>Time zone:</strong> GMT / BST in summer</li>
@@ -56,14 +56,15 @@
               <li><strong>Payment:</strong> Contactless card, phone pay, or Oyster</li>
             </ul>
           </div>
+
           <div>
-            <h3>How CityWP Helps You</h3>
-            <ul class="info-list">
-              <li>Clear airport ➝ London transport options</li>
+            <h2>How CityWP Helps You</h2>
+            <ul class="key-list">
+              <li>Clear airport → London transport options</li>
               <li>Top attractions &amp; landmarks by category</li>
-              <li>Museum and family activity ideas</li>
+              <li>Museum and family-friendly ideas</li>
               <li>Parks &amp; gardens for relaxing days</li>
-              <li>Shopping areas and tips</li>
+              <li>Shopping areas, tips and opening info</li>
               <li>Emergency numbers &amp; embassy details</li>
             </ul>
           </div>
@@ -71,146 +72,114 @@
       </div>
     </section>
 
-    <!-- AIRPORTS SECTION -->
-    <section id="airports" class="page-section">
-      <h2>Airports &amp; Transport to Central London</h2>
+    <!-- AIRPORTS -->
+    <section id="airports" class="section">
+      <h1>Airports &amp; Transport to Central London</h1>
       <p class="section-intro">
-        London is served by several airports. Below are typical train options from each airport into London.
+        London is served by several airports. Below are quick guides for trains from each airport into London.
         Always check live prices &amp; times before you travel.
       </p>
-
-      <div id="airportCards" class="card-column">
-        <!-- Filled by app.js using structured data -->
-      </div>
+      <div id="airport-list" class="cards-grid"></div>
     </section>
 
-    <!-- ATTRACTIONS SECTION -->
-    <section id="attractions" class="page-section">
-      <h2>Attractions &amp; Landmarks</h2>
+    <!-- ATTRACTIONS -->
+    <section id="attractions" class="section">
+      <h1>Attractions &amp; Landmarks</h1>
       <p class="section-intro">
-        Classic London sights to add to your CityWP plan.
+        Classic London sights and must-see landmarks. Many are free to visit; some require tickets or timed entry.
       </p>
-
-      <ul class="bullet-columns">
-        <li><strong>Big Ben &amp; Houses of Parliament</strong> – Westminster, Westminster station</li>
-        <li><strong>Tower Bridge &amp; Tower of London</strong> – Tower Hill station</li>
-        <li><strong>London Eye</strong> – Views of the Thames &amp; skyline, Waterloo station</li>
-        <li><strong>Buckingham Palace</strong> – Royal residence, Green Park / Victoria stations</li>
-        <li><strong>Trafalgar Square &amp; National Gallery</strong> – Charing Cross station</li>
-        <li><strong>Sky Garden</strong> – Free views (book ahead), Monument station</li>
-      </ul>
+      <div id="attraction-list" class="cards-grid"></div>
     </section>
 
-    <!-- MUSEUMS SECTION -->
-    <section id="museums" class="page-section">
-      <h2>Museums</h2>
+    <!-- MUSEUMS -->
+    <section id="museums" class="section">
+      <h1>Museums</h1>
       <p class="section-intro">
-        Many London museums are free to enter (special exhibitions may charge).
+        London’s museums are world-class – and many are free. Perfect for rainy days or culture-packed afternoons.
       </p>
-
-      <ul class="bullet-columns">
-        <li><strong>British Museum</strong> – World history &amp; culture, Holborn / Tottenham Court Road</li>
-        <li><strong>Natural History Museum</strong> – Dinosaurs &amp; nature, South Kensington</li>
-        <li><strong>Science Museum</strong> – Hands-on science &amp; tech, South Kensington</li>
-        <li><strong>Victoria &amp; Albert Museum</strong> – Art &amp; design, South Kensington</li>
-        <li><strong>Tate Modern</strong> – Modern art in a former power station, Blackfriars / Southwark</li>
-      </ul>
+      <div id="museum-list" class="cards-grid"></div>
     </section>
 
-    <!-- FAMILY SECTION -->
-    <section id="family" class="page-section">
-      <h2>Family &amp; Kids</h2>
+    <!-- FAMILY -->
+    <section id="family" class="section">
+      <h1>Family Activities</h1>
       <p class="section-intro">
-        Ideas that work well with children and families.
+        Kid-friendly attractions, interactive museums and fun experiences for the whole family.
       </p>
-
-      <ul class="bullet-columns">
-        <li>Natural History Museum – dinosaurs, fossils, free entry</li>
-        <li>Science Museum – interactive galleries &amp; IMAX (some paid)</li>
-        <li>London Zoo – Regent’s Park, Camden Town / Regent’s Park stations</li>
-        <li>Diana Memorial Playground – Pirate-ship playground in Kensington Gardens</li>
-        <li>London Eye – gentle 30-minute ride with city views</li>
-      </ul>
+      <div id="family-list" class="cards-grid"></div>
     </section>
 
-    <!-- PARKS SECTION -->
-    <section id="parks" class="page-section">
-      <h2>Parks &amp; Gardens</h2>
+    <!-- PARKS -->
+    <section id="parks" class="section">
+      <h1>Parks &amp; Gardens</h1>
       <p class="section-intro">
-        Free green spaces to relax, picnic and walk.
+        Green spaces to relax, walk and play. Great for picnics and sunny days.
       </p>
-
-      <ul class="bullet-columns">
-        <li><strong>Hyde Park &amp; Kensington Gardens</strong> – central, lakes, playgrounds</li>
-        <li><strong>Regent’s Park &amp; Primrose Hill</strong> – views over the city skyline</li>
-        <li><strong>St James’s Park</strong> – near Buckingham Palace, pelicans</li>
-        <li><strong>Greenwich Park</strong> – observatory, Prime Meridian line, river views</li>
-      </ul>
+      <div id="park-list" class="cards-grid"></div>
     </section>
 
-    <!-- SHOPPING SECTION -->
-    <section id="shopping" class="page-section">
-      <h2>Shopping Areas</h2>
-      <ul class="bullet-columns">
-        <li><strong>Oxford Street &amp; Regent Street</strong> – big brands &amp; flagship stores</li>
-        <li><strong>Covent Garden</strong> – boutiques, market, street performers</li>
-        <li><strong>Westfield London / Westfield Stratford City</strong> – large malls</li>
-        <li><strong>Camden Market</strong> – alternative fashion, food stalls, music</li>
-        <li><strong>Spitalfields &amp; Brick Lane</strong> – vintage, markets, street art</li>
-      </ul>
+    <!-- SHOPPING -->
+    <section id="shopping" class="section">
+      <h1>Shopping Areas</h1>
+      <p class="section-intro">
+        From famous high streets to markets and unique districts.
+      </p>
+      <div id="shopping-list" class="cards-grid"></div>
     </section>
 
-    <!-- EMERGENCY SECTION -->
-    <section id="emergency" class="page-section">
-      <h2>Emergency &amp; Embassy Help</h2>
+    <!-- EMERGENCY & EMBASSIES -->
+    <section id="emergency" class="section">
+      <h1>Emergency &amp; Embassies</h1>
 
-      <div class="emergency-grid">
+      <div class="grid-2">
         <div class="card">
-          <h3>UK Emergency Numbers</h3>
-          <ul class="info-list">
-            <li><strong>999</strong> – Police, ambulance, fire (life-threatening emergencies)</li>
-            <li><strong>112</strong> – EU-wide emergency number (also works in the UK)</li>
-            <li><strong>111</strong> – Non-emergency medical advice (NHS)</li>
+          <h2>UK Emergency Numbers</h2>
+          <ul class="key-list">
+            <li><strong>999</strong> – Emergency (police, ambulance, fire)</li>
+            <li><strong>112</strong> – EU-wide emergency number (also works in UK)</li>
+            <li><strong>101</strong> – Non-emergency police</li>
+            <li><strong>111</strong> – NHS non-emergency medical help</li>
           </ul>
-          <p class="subtext">
-            When you call, state clearly: <em>what</em> happened, <em>where</em> you are, and if anyone is injured.
+          <p class="note">
+            When calling from a foreign mobile, you can still dial 999 or 112 without a UK SIM.
           </p>
         </div>
 
         <div class="card">
-          <h3>Example Embassy (Canada)</h3>
-          <p><strong>Embassy:</strong> Canada House</p>
-          <p><strong>Address:</strong> 5 Trafalgar Square, London, SW1Y 5BJ</p>
-          <p><strong>Telephone:</strong> 020 7004 6000</p>
-          <p><strong>Opening hours:</strong> Monday–Friday, 08:00–16:00 (check before you go)</p>
-          <p><strong>Nearest Underground:</strong></p>
-          <ul class="info-list">
-            <li>Charing Cross – Bakerloo &amp; Northern (4-minute walk)</li>
-            <li>Piccadilly Circus – Piccadilly &amp; Bakerloo (4-minute walk)</li>
-            <li>Leicester Square – Piccadilly &amp; Northern (5-minute walk)</li>
+          <h2>Safety Tips</h2>
+          <ul class="key-list">
+            <li>Beware of pickpockets in crowded tourist areas and on public transport.</li>
+            <li>Use licensed black cabs or registered minicabs; avoid unmarked cars.</li>
+            <li>Keep bags closed and in sight when sitting in cafés and restaurants.</li>
+            <li>Drinking alcohol is not allowed on most TfL public transport.</li>
           </ul>
-          <p class="subtext">
-            Use the same format to add other embassies for your country inside the app later.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Personal SOS Plan</h3>
-          <ol class="info-list numbered">
-            <li>Save local emergency numbers (999 / 112 / 111) in your phone.</li>
-            <li>Keep your passport photo &amp; travel insurance details in a safe place.</li>
-            <li>Share your accommodation address &amp; phone with family / friends.</li>
-            <li>Use trusted taxi services or apps – avoid unlicensed minicabs.</li>
-          </ol>
         </div>
       </div>
+
+      <h2 class="subheading">Embassies &amp; Consulates in London</h2>
+      <p class="section-intro">
+        If you lose your passport or need urgent consular help, contact your country’s embassy or consulate.
+        Below are details for many popular embassies. You can easily add more in <code>app.js</code>.
+      </p>
+
+      <div class="filters">
+        <input id="embassy-search" type="text" placeholder="Search by country..." />
+      </div>
+      <div id="embassy-list" class="cards-grid"></div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>CityWP – City Welcome Planner • London • Offline-friendly travel helper</p>
+    CityWP – City Welcome Planner • London • Offline-friendly travel helper
   </footer>
 
-  <script src="app.js" defer></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').catch(function (err) {
+        console.log('Service worker registration failed', err);
+      });
+    }
+  </script>
 </body>
 </html>
