@@ -1,498 +1,222 @@
+/* ============================================== */
+/* 1. BRAND VARIABLES AND BASE STYLES */
+/* ============================================== */
+
 :root {
-  --brand: #002366;          /* your Pantone RGB 0,35,102 */
-  --brand-light: #1c3f8b;
-  --accent: #00a9ff;
-  --accent-soft: #e5f4ff;
-  --bg: #f4f6fb;
-  --card-bg: #ffffff;
-  --text-main: #111827;
-  --text-muted: #6b7280;
-  --danger: #e11d48;
-  --radius-lg: 14px;
-  --shadow-soft: 0 18px 35px rgba(15, 23, 42, 0.18);
+    /* CityWP Brand Colors */
+    --color-navy: rgb(0, 35, 102);  /* Primary Blue (C: 100, M: 93, Y: 29, K: 25) */
+    --color-red-accent: rgb(200, 0, 0); /* Vibrant Red CTA */
+    --color-white: #ffffff;
+    --color-light-grey: #f5f5f5;
+    --color-text: #333;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* Reset and Base Typography */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--bg);
-  color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-white);
 }
 
-/* Topbar */
-
-.topbar {
-  background: linear-gradient(90deg, var(--brand), #0049a8);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 32px;
-  position: sticky;
-  top: 0;
-  z-index: 20;
+h1, h2, h3, h4 {
+    color: var(--color-navy);
+    line-height: 1.2;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+a {
+    text-decoration: none;
+    color: var(--color-navy);
 }
 
-.brand-logo {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
+/* ============================================== */
+/* 2. HEADER & NAVIGATION STYLES */
+/* ============================================== */
+
+.main-header {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    position: sticky; 
+    top: 0;
+    z-index: 1000; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.brand-title {
-  font-weight: 700;
-  font-size: 1.1rem;
+.header-logo img {
+    height: 30px; 
+    width: auto;
 }
 
-.brand-subtitle {
-  font-size: 0.8rem;
-  opacity: 0.8;
+/* Mobile Navigation (Hidden by default) */
+.main-nav {
+    display: none; 
+    position: absolute;
+    top: 60px; /* Adjust based on header height */
+    left: 0;
+    width: 100%;
+    background-color: var(--color-navy);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.main-nav.active {
+    display: block; /* Shown when JS toggles the active class */
 }
 
-/* Nav */
-
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 6px 16px 10px;
-  background: #00153b;
+.main-nav ul {
+    list-style: none;
+    padding: 0;
 }
 
-.nav-item {
-  border: none;
-  border-radius: 999px;
-  padding: 7px 14px;
-  font-size: 0.82rem;
-  color: #e5e7eb;
-  background: transparent;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+.main-nav a {
+    color: var(--color-white);
+    padding: 12px 20px;
+    display: block;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.nav-item:hover {
-  background: rgba(255, 255, 255, 0.12);
+.main-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
-.nav-item.active {
-  background: #ffffff;
-  color: var(--brand);
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-/* Layout */
-
-.page {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 24px 16px 60px;
+.nav-toggle {
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.5em;
+    cursor: pointer;
+    order: 3; /* Ensure it's on the far right on mobile */
 }
 
-.section {
-  display: none;
+/* Hide Log In on very small screens to prioritize Plan CTA */
+.btn-login {
+    display: none;
 }
 
-.section-active {
-  display: block;
+/* ============================================== */
+/* 3. BUTTONS (CTA) STYLES */
+/* ============================================== */
+
+/* Base Button Style */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
-.section-title {
-  font-size: 1.6rem;
-  margin-bottom: 4px;
+/* Primary CTA Button (Vibrant Red for Hero/Main Actions) */
+.btn-primary, .btn-plan-cta {
+    background-color: var(--color-red-accent);
+    color: var(--color-white);
+    border: none;
 }
 
-.section-intro {
-  color: var(--text-muted);
-  margin-bottom: 16px;
+.btn-primary:hover, .btn-plan-cta:hover {
+    background-color: rgb(175, 0, 0); 
+    transform: translateY(-2px);
 }
 
-/* Hero – background image */
+/* Secondary CTA Button (Red Outline for Feature Cards) */
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-red-accent);
+    border: 2px solid var(--color-red-accent); 
+    padding: 8px 18px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-red-accent);
+    color: var(--color-white);
+}
+
+/* ============================================== */
+/* 4. HERO SECTION STYLES */
+/* ============================================== */
 
 .hero {
-  position: relative;
-  min-height: 340px;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: var(--shadow-soft);
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    min-height: 80vh; 
+    text-align: center;
+    position: relative;
+    padding: 40px 20px;
+    color: var(--color-white); 
 }
 
-.hero-london {
-  background-image: url("assets/images/london-skyline.jpg");
-  background-size: cover;
-  background-position: center;
-}
-
-.hero-overlay {
-  background: linear-gradient(135deg, rgba(0, 18, 60, 0.9), rgba(0, 48, 120, 0.7));
-  inset: 0;
-  position: absolute;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; 
+    
+    /* Use Big Ben image and Navy Overlay */
+    background-image: url('../assets/11- Big Ben & The House of Parliament.jpg'); 
+    background-size: cover;
+    background-position: center;
+    
+    /* Navy Overlay */
+    background-color: var(--color-navy);
+    background-blend-mode: multiply; /* Blends the navy with the image */
+    opacity: 0.9; /* Opacity of the overlay effect */
 }
 
 .hero-content {
-  max-width: 1000px;
-  width: 100%;
-  margin: 32px;
-  background: rgba(255, 255, 255, 0.96);
+    position: relative;
+    z-index: 2; 
+    max-width: 600px; 
 }
 
 .hero h1 {
-  margin-top: 0;
-  margin-bottom: 4px;
+    font-size: 2.2em; 
+    margin-bottom: 0.5em;
+    color: var(--color-white);
 }
 
-.hero-tagline {
-  margin-top: 0;
-  color: var(--text-muted);
+.hero p {
+    font-size: 1.1em;
+    margin-bottom: 2.5em;
+    opacity: 0.9;
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 18px;
+.hero .btn-primary {
+    padding: 15px 30px;
+    font-size: 1.1em;
 }
 
-.hero-col h2 {
-  font-size: 1rem;
-  margin-bottom: 6px;
+/* ============================================== */
+/* 5. FEATURE CARDS STYLES */
+/* ============================================== */
+
+.feature-cards {
+    padding: 40px 20px;
+    background-color: var(--color-light-grey); 
+    text-align: center;
 }
 
-.hero-cta {
-  margin-top: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-/* Cards */
-
-.card {
-  background: var(--card-bg);
-  border-radius: var(--radius-lg);
-  padding: 18px 20px;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
-}
-
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 14px;
-}
-
-.bullet-list {
-  padding-left: 18px;
-  margin: 0;
-}
-
-.bullet-list li {
-  margin-bottom: 4px;
-}
-
-/* Boarding pass cards */
-
-.boarding-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.boarding-card {
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: var(--shadow-soft);
-  overflow: hidden;
-  position: relative;
-}
-
-.boarding-header {
-  background: linear-gradient(90deg, var(--brand), var(--accent));
-  color: #fff;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.boarding-body {
-  padding: 14px 16px 12px;
-  display: grid;
-  grid-template-columns: 2fr 1.4fr;
-  gap: 10px;
-  font-size: 0.88rem;
-}
-
-.boarding-label {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-}
-
-.boarding-big {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.boarding-footer {
-  border-top: 1px dashed #e5e7eb;
-  padding: 8px 16px 10px;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-/* Filters */
-
-.filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.filter-row input,
-.filter-row select {
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-  font-size: 0.85rem;
-}
-
-/* Emergency layout */
-
-.emergency-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: 16px;
-}
-
-.embassy-card {
-  margin-top: 10px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: var(--accent-soft);
-  font-size: 0.88rem;
-}
-
-/* Saver grid */
-
-.saver-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-}
-
-.saver-tier h3 {
-  margin-top: 0;
-}
-
-.disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Buttons */
-
-.btn {
-  border-radius: 999px;
-  border: none;
-  padding: 8px 16px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #022c47;
-}
-
-.btn-secondary {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-.btn-outline {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  color: #ffffff;
-}
-
-.btn-primary:hover {
-  filter: brightness(1.05);
-}
-
-.btn-outline:hover {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-/* Footer */
-
-.footer {
-  text-align: center;
-  padding: 16px;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-/* User chip */
-
-.user-chip {
-  background: rgba(255, 255, 255, 0.16);
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.chip-logout {
-  border: none;
-  background: rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
-  color: #fff;
-  font-size: 0.72rem;
-  padding: 2px 8px;
-  cursor: pointer;
-}
-
-/* Modal */
-
-.modal.hidden {
-  display: none;
-}
-
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-}
-
-.modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.5);
-}
-
-.modal-body {
-  position: relative;
-  z-index: 41;
-  max-width: 420px;
-  margin: 80px auto;
-}
-
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border-radius: 999px;
-  border: none;
-  background: #f3f4f6;
-  cursor: pointer;
-}
-
-.modal-subtitle {
-  color: var(--text-muted);
-  margin-top: 0;
-}
-
-.modal-body input {
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  margin-bottom: 10px;
-  font-size: 0.9rem;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
-
-.tab-row {
-  display: inline-flex;
-  border-radius: 999px;
-  background: #e5e7eb;
-  padding: 3px;
-  margin: 10px 0 14px;
-}
-
-.tab-btn {
-  border: none;
-  border-radius: 999px;
-  padding: 6px 14px;
-  background: transparent;
-  font-size: 0.82rem;
-  cursor: pointer;
-}
-
-.tab-btn.tab-active {
-  background: #ffffff;
-}
-
-.tab-panel {
-  display: none;
-}
-
-.tab-panel-active {
-  display: block;
-}
-
-.helper-text {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-.status-text {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* Responsive */
-
-@media (max-width: 768px) {
-  .hero-content {
-    margin: 16px;
-    padding: 14px 14px 16px;
-  }
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-  .boarding-body {
-    grid-template-columns: 1fr;
-  }
-  .emergency-layout {
-    grid-template-columns: 1fr;
-  }
-}
+.
