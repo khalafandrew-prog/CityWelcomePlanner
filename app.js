@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, onSnapshot } from 'firebase/firestore';
-import { Database, Plane, Settings, User, LayoutGrid, Star, Info, Users, Palette, Trees, ShoppingCart, Landmark, Map, CalendarDays, Search, AlertTriangle, Clock, MapPin, PoundSterling, Ticket } from 'lucide-react'; // Added new icons
+import { Database, Plane, Settings, User, LayoutGrid, Star, Info, Users, Palette, Trees, ShoppingCart, Landmark, Map, CalendarDays, Search, AlertTriangle, Clock, MapPin, PoundSterling, Ticket, Phone, Siren, Zap, Bus, Globe, Plug, Flag, ShieldCheck } from 'lucide-react'; // Added Plug, Flag, ShieldCheck icons
 
 // --- Global Configuration ---
 // Color based on uploaded CWP Colour Pantone (R: 0, G: 35, B: 102)
@@ -27,47 +27,114 @@ const initialAirports = [
     { id: 3, name: "London City Airport", code: "LCY", city: "East London", country: "UK", type: "Business", image: "https://placehold.co/400x200/D81B60/FFFFFF?text=LCY" },
 ];
 
-// --- LONDON LANDMARKS DATA ---
+// --- LONDON GUIDES DATA ---
 const londonLandmarks = [
+    { id: 1, name: "The British Museum", description: "A world-famous museum dedicated to human history, art, and culture. Contains over 8 million works, including the Rosetta Stone and Parthenon sculptures.", image: "https://placehold.co/400x200/4CAF50/FFFFFF?text=BRITISH+MUSEUM", times: "10:00 - 17:00 (Fridays open until 20:30)", travel: "Nearest Underground: Tottenham Court Road, Holborn, Russell Square. Bus: Routes 1, 8, 19, 25, 38, 55, 98, 242.", admission: "Free (special exhibitions may require a fee)" },
+    { id: 2, name: "The Tower of London", description: "Historic castle on the north bank of the River Thames. Famous for housing the Crown Jewels and its dark history as a prison.", image: "https://placehold.co/400x200/D32F2F/FFFFFF?text=TOWER+OF+LONDON", times: "09:00 - 17:30 (varies by season)", travel: "Nearest Underground: Tower Hill (District & Circle lines). DLR: Tower Gateway. Bus: Routes 15, 42, 78, 100, 343.", admission: "Approx. £33.60 (Adult, online booking recommended)" },
+    { id: 3, name: "The London Eye", description: "Europe's tallest cantilevered observation wheel, offering breathtaking 360-degree views of the capital.", image: "https://placehold.co/400x200/0288D1/FFFFFF?text=LONDON+EYE", times: "11:00 - 18:00 (may extend in peak season)", travel: "Nearest Underground: Waterloo (Bakerloo, Jubilee, Northern, Waterloo & City lines). Bus: Routes 211, 77, 381.", admission: "Starts from approx. £35.00 (Standard Ticket)" },
+    { id: 4, name: "Buckingham Palace", description: "The official London residence and administrative headquarters of the monarch of the United Kingdom.", image: "https://placehold.co/400x200/FFAB00/000000?text=BUCKINGHAM+PALACE", times: "State Rooms open seasonally (usually July-September): 09:30 - 19:30.", travel: "Nearest Underground: Green Park, St. James's Park, Victoria. Bus: Routes 11, 211, C1, C10, M2.", admission: "Approx. £30.00 (Access to State Rooms, check availability)" },
+];
+
+const londonAttractions = [
+    { id: 11, name: "Warner Bros. Studio Tour London", description: "The Making of Harry Potter: a behind-the-scenes look at the film series, featuring authentic sets, costumes, and props.", image: "https://placehold.co/400x200/9C27B0/FFFFFF?text=HARRY+POTTER+TOUR", times: "09:00 - 20:00 (Booking essential)", travel: "Train to Watford Junction, then shuttle bus (outside central London).", admission: "Approx. £53.50 (Adult, varies by season)" },
+    { id: 12, name: "The Shard", description: "The tallest building in the UK, offering an observation deck with panoramic 40-mile views across London and beyond.", image: "https://placehold.co/400x200/512DA8/FFFFFF?text=THE+SHARD", times: "10:00 - 22:00 (Check website for specific times)", travel: "Nearest Underground: London Bridge (Jubilee & Northern lines).", admission: "Approx. £32.00 (Adult, advance booking recommended)" },
+    { id: 13, name: "Trafalgar Square", description: "Famous public square in central London, home to Nelson's Column, the National Gallery, and often host to public events and celebrations.", image: "https://placehold.co/400x200/FBC02D/000000?text=TRAFALGAR+SQUARE", times: "Open 24 hours (National Gallery has fixed hours)", travel: "Nearest Underground: Charing Cross, Leicester Square.", admission: "Free (public space)" },
+    { id: 14, name: "Natural History Museum", description: "World-renowned museum exhibiting a vast range of specimens from various segments of natural history, including the famous dinosaur skeletons.", image: "https://placehold.co/400x200/004D40/FFFFFF?text=NAT+HISTORY+MUSEUM", times: "10:00 - 17:50 (Daily)", travel: "Nearest Underground: South Kensington (District, Circle, Piccadilly lines).", admission: "Free (ticket required for entry)" },
+];
+
+const londonFamilyOutings = [
+    { id: 21, name: "Science Museum", description: "Explore world-renowned collections and interactive exhibits focused on scientific and technological developments. Great for kids of all ages.", image: "https://placehold.co/400x200/F44336/FFFFFF?text=SCIENCE+MUSEUM", times: "10:00 - 18:00 (Daily)", travel: "Nearest Underground: South Kensington (District, Circle, Piccadilly lines).", admission: "Free (Charge for IMAX theatre and some special exhibitions)" },
+    { id: 22, name: "London Zoo (ZSL)", description: "The world's oldest scientific zoo, located in Regent's Park. Home to thousands of animals and dedicated conservation areas.", image: "https://placehold.co/400x200/009688/FFFFFF?text=LONDON+ZOO", times: "10:00 - 17:00 (Varies by season)", travel: "Nearest Underground: Camden Town (Northern line). Bus: Routes 274.", admission: "Approx. £30.00 (Adult), £20.00 (Child) - Booking recommended." },
+    { id: 23, name: "Shrek's Adventure! London", description: "A walk-and-ride interactive adventure through the world of Shrek, featuring live actors, special effects, and a 4D ride.", image: "https://placehold.co/400x200/FFC107/000000?text=SHREK+ADVENTURE", times: "10:00 - 16:00 (Booking essential)", travel: "Nearest Underground: Waterloo (Jubilee, Northern, Bakerloo, Waterloo & City lines).", admission: "Starts from approx. £27.00 (Standard Ticket)" },
+    { id: 24, name: "Kew Gardens", description: "A world heritage site housing the largest and most diverse botanical collection in the world. Features glasshouses, a treetop walkway, and play areas.", image: "https://placehold.co/400x200/008000/FFFFFF?text=KEW+GARDENS", times: "10:00 - 18:00 (Varies seasonally)", travel: "Nearest Underground: Kew Gardens (District line). Overground: Kew Gardens.", admission: "Approx. £18.00 (Adult, online booking)" },
+];
+
+const londonEmergencyContacts = [
+    { 
+        id: 1, 
+        name: "All Emergency Services", 
+        number: "999", 
+        description: "For immediate, life-threatening emergencies requiring Police, Fire, or Ambulance services.", 
+        icon: Siren, 
+        color: '#B71C1C' // Deep Red 
+    },
+    { 
+        id: 2, 
+        name: "Non-Emergency Police", 
+        number: "101", 
+        description: "For reporting crimes that are not ongoing, providing information, or non-urgent inquiries.", 
+        icon: Search, 
+        color: '#1565C0' // Blue 
+    },
+    { 
+        id: 3, 
+        name: "NHS Non-Emergency Medical", 
+        number: "111", 
+        description: "For urgent medical help or advice when it's not a life-threatening situation and you can't wait for a GP.", 
+        icon: Info, 
+        color: '#004D40' // Dark Green 
+    },
+    { 
+        id: 4, 
+        name: "Samaritans (Emotional Support)", 
+        number: "116 123", 
+        description: "Free, 24-hour confidential listening service for anyone struggling to cope.", 
+        icon: Phone, 
+        color: '#FF6F00' // Orange 
+    },
+    { 
+        id: 5, 
+        name: "London TravelWatch", 
+        number: "0343 222 1234", 
+        description: "For non-emergency travel information, disruptions, or issues with public transport in London (TfL).", 
+        icon: Bus, 
+        color: '#8D6E63' // Brown 
+    },
+];
+
+// --- EMBASSIES DATA (Reverted to placeholder images) ---
+const londonEmbassies = [
     {
         id: 1,
-        name: "The British Museum",
-        description: "A world-famous museum dedicated to human history, art, and culture. Contains over 8 million works, including the Rosetta Stone and Parthenon sculptures.",
-        image: "https://placehold.co/400x200/4CAF50/FFFFFF?text=BRITISH+MUSEUM", // Updated placeholder
-        times: "10:00 - 17:00 (Fridays open until 20:30)",
-        travel: "Nearest Underground: Tottenham Court Road, Holborn, Russell Square. Bus: Routes 1, 8, 19, 25, 38, 55, 98, 242.",
-        admission: "Free (special exhibitions may require a fee)",
+        country: "United States",
+        address: "33 Nine Elms Lane, Nine Elms, London SW11 7US",
+        phone: "+44 20 7499 9000",
+        website: "https://uk.usembassy.gov/",
+        image: "https://placehold.co/400x200/002868/FFFFFF?text=USA+EMBASSY"
     },
     {
         id: 2,
-        name: "The Tower of London",
-        description: "Historic castle on the north bank of the River Thames. Famous for housing the Crown Jewels and its dark history as a prison.",
-        image: "https://placehold.co/400x200/D32F2F/FFFFFF?text=TOWER+OF+LONDON", // Updated placeholder
-        times: "09:00 - 17:30 (varies by season)",
-        travel: "Nearest Underground: Tower Hill (District & Circle lines). DLR: Tower Gateway. Bus: Routes 15, 42, 78, 100, 343.",
-        admission: "Approx. £33.60 (Adult, online booking recommended)",
+        country: "France",
+        address: "58 Knightsbridge, London SW1X 7JT",
+        phone: "+44 20 7073 1000",
+        website: "https://uk.ambafrance.org/",
+        image: "https://placehold.co/400x200/ED2939/FFFFFF?text=FRANCE+EMBASSY"
     },
     {
         id: 3,
-        name: "The London Eye",
-        description: "Europe's tallest cantilevered observation wheel, offering breathtaking 360-degree views of the capital.",
-        image: "https://placehold.co/400x200/0288D1/FFFFFF?text=LONDON+EYE", // Updated placeholder
-        times: "11:00 - 18:00 (may extend in peak season)",
-        travel: "Nearest Underground: Waterloo (Bakerloo, Jubilee, Northern, Waterloo & City lines). Bus: Routes 211, 77, 381.",
-        admission: "Starts from approx. £35.00 (Standard Ticket)",
+        country: "Germany",
+        address: "23 Belgrave Square, London SW1X 8PZ",
+        phone: "+44 20 7824 1300",
+        website: "https://uk.diplo.de/",
+        image: "https://placehold.co/400x200/000000/FFCC00?text=GERMANY+EMBASSY"
     },
     {
         id: 4,
-        name: "Buckingham Palace",
-        description: "The official London residence and administrative headquarters of the monarch of the United Kingdom.",
-        image: "https://placehold.co/400x200/FFAB00/000000?text=BUCKINGHAM+PALACE", // Updated placeholder
-        times: "State Rooms open seasonally (usually July-September): 09:30 - 19:30.",
-        travel: "Nearest Underground: Green Park, St. James's Park, Victoria. Bus: Routes 11, 211, C1, C10, M2.",
-        admission: "Approx. £30.00 (Access to State Rooms, check availability)",
+        country: "Canada",
+        address: "Canada House, Trafalgar Square, London SW1Y 5BJ",
+        phone: "+44 20 7004 6000",
+        website: "https://www.canadainternational.gc.ca/united_kingdom-royaume_uni/",
+        image: "https://placehold.co/400x200/D8203E/FFFFFF?text=CANADA+EMBASSY"
+    },
+    {
+        id: 5,
+        country: "Australia",
+        address: "Australia House, Strand, London WC2B 4LA",
+        phone: "+44 20 7379 4334",
+        website: "https://uk.embassy.gov.au/",
+        image: "https://placehold.co/400x200/00008B/FFFFFF?text=AUSTRALIA+EMBASSY"
     },
 ];
-// --- End of LONDON LANDMARKS DATA ---
-
 
 // --- Navigation Item Definitions ---
 
@@ -78,14 +145,26 @@ const coreNavItems = [
     { key: 'settings', label: 'Settings', icon: Settings, description: "Application configuration and user info" },
 ];
 
+// UPDATED POI ITEMS (Renamed Welcome Pack to Welcome Planner)
 const poiItems = [
+    { key: 'welcome', label: 'Welcome Planner', icon: Flag, description: "A comprehensive introduction and essential tips for visitors and urban planning overview." }, // Renamed label
     { key: 'landmarks', label: 'Landmarks', icon: Landmark, description: "Historical and architectural structures." },
     { key: 'attractions', label: 'Attractions', icon: Star, description: "Popular points of interest and tourist destinations." },
-    { key: 'information', label: 'Information', icon: Info, description: "Essential city services and contacts." },
-    { key: 'family', label: 'Family', icon: Users, description: "Family-friendly activities and venues." },
+    { key: 'family', label: 'Family Outings', icon: Users, description: "The best family-friendly attractions and educational venues for visitors with children." },
+    { key: 'emergency', label: 'Emergency Contacts', icon: AlertTriangle, description: "Immediate and non-urgent contact details for critical services." },
+    { key: 'diplomatic', label: 'Diplomatic Services', icon: ShieldCheck, description: "Essential embassy and consulate contact services for foreign nationals." },
     { key: 'museums', label: 'Museums', icon: Palette, description: "Cultural institutions and art galleries." },
     { key: 'parks', label: 'Parks & Gardens', icon: Trees, description: "Green spaces and nature reserves." },
     { key: 'shopping', label: 'Shopping', icon: ShoppingCart, description: "Markets, malls, and local shops." },
+];
+
+// UPDATED MOBILE NAVIGATION ITEMS (Kept label short as 'Welcome' for mobile bar constraints)
+const mobileNavItems = [
+    { key: 'landmarks', label: 'Landmarks', icon: Landmark },
+    { key: 'welcome', label: 'Welcome', icon: Flag }, // Points to Welcome Planner
+    { key: 'family', label: 'Family', icon: Users },
+    { key: 'emergency', label: 'Emergency', icon: AlertTriangle },
+    { key: 'diplomatic', label: 'Diplomatic', icon: ShieldCheck }, // Points to Embassies
 ];
 
 // --- Utility Components ---
@@ -97,7 +176,7 @@ const DataCard = ({ title, content, icon: Icon, image, color }) => (
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         </div>
         <div className="p-4 sm:p-6">
-            <h3 className={`text-xl font-bold text-gray-900 flex items-center mb-2`}>
+            <h3 className={`text-xl font-bold text-gray-900 flex items-center mb-2`} style={{ color: PRIMARY_COLOR }}>
                 {Icon && <Icon className="w-5 h-5 mr-2" style={{ color: PRIMARY_COLOR }} />}
                 {title}
             </h3>
@@ -122,10 +201,8 @@ const LandmarkCard = ({ landmark }) => (
                 src={landmark.image} 
                 alt={landmark.name} 
                 className="w-full h-full object-cover" 
-                onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/400x200/E0E0E0/333333?text=London+Landmark"; }} 
+                onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/400x200/E0E0E0/333333?text=London+Site"; }} 
             />
-            {/* Optional: Dark Gradient for subtle effect, if desired, but removed name overlay */}
-            {/* <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent/30"></div> */}
         </div>
 
         <div className="p-4 sm:p-6">
@@ -142,7 +219,7 @@ const LandmarkCard = ({ landmark }) => (
                 <div className="flex items-start">
                     <Clock className="w-5 h-5 mr-3 flex-shrink-0" style={{ color: ACCENT_COLOR }} />
                     <div>
-                        <p className="text-sm font-semibold text-gray-800">Opening Times</p>
+                        <p className="text-sm font-semibold text-gray-800">Operating Times</p>
                         <p className="text-sm text-gray-600">{landmark.times}</p>
                     </div>
                 </div>
@@ -182,7 +259,182 @@ const LoadingIndicator = () => (
     </div>
 );
 
-// --- New Boarding Pass Component ---
+const EmergencyCard = ({ contact }) => (
+    <div className="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200 transform transition duration-300 hover:scale-[1.02]">
+        <div className="p-6">
+            <div className="flex items-center justify-between mb-4 border-b pb-3">
+                <div className="flex items-center">
+                    <contact.icon className="w-8 h-8 mr-3" style={{ color: contact.color }} />
+                    <h3 className="text-xl font-extrabold text-gray-900" style={{ color: PRIMARY_COLOR }}>
+                        {contact.name}
+                    </h3>
+                </div>
+                <a 
+                    href={`tel:${contact.number.replace(/\s/g, '')}`} 
+                    className="flex items-center text-sm font-bold px-4 py-2 rounded-full text-white shadow-md transition duration-150 hover:opacity-90"
+                    style={{ backgroundColor: contact.color }}
+                >
+                    <Phone className="w-4 h-4 mr-1" />
+                    Call
+                </a>
+            </div>
+
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                <div className="mb-4 sm:mb-0">
+                    <p className="text-sm font-semibold text-gray-800">Phone Number</p>
+                    <p className="text-4xl font-black mt-1" style={{ color: contact.color }}>{contact.number}</p>
+                </div>
+                <div className="sm:w-1/2">
+                    <p className="text-sm font-semibold text-gray-800 mb-1">When to Call</p>
+                    <p className="text-sm text-gray-600">{contact.description}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+// --- NEW WELCOME PAGE COMPONENT (Updated titles and labels) ---
+const WelcomePage = () => (
+    <div className="p-4 sm:p-8">
+        {/* Header Banner */}
+        <div 
+            className="relative bg-cover bg-center h-64 rounded-2xl shadow-xl overflow-hidden mb-8"
+            style={{ 
+                backgroundImage: `url('https://placehold.co/1200x400/002366/FFFFFF?text=CITY+WELCOME+PLANNER')`, // Updated text in placeholder
+                backgroundSize: 'cover'
+            }}
+        >
+            <div className="absolute inset-0 bg-black/60 flex items-center justify-center p-6">
+                <div className="text-center">
+                    <h1 className="text-4xl sm:text-6xl font-black text-white mb-2 tracking-tight">
+                        City Welcome Planner
+                    </h1>
+                    <p className="text-xl text-gray-200 font-medium">Your essential guide to London.</p>
+                </div>
+            </div>
+        </div>
+        
+        {/* Introduction Text */}
+        <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100 mb-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: PRIMARY_COLOR }}>
+                City Welcome Planner (CWP) welcomes you to the city of London.
+            </h2>
+            <p className="text-gray-700 mb-4">
+                London is the **Capital of England** and the **United Kingdom**. The city is filled with historic, beautiful landmarks and attractions. With great public transportation (TfL) making it easy to commute within the city to its landmarks, attractions, museums, shopping, and other points of interests.
+            </p>
+            <p className="text-gray-700">
+                To facilitate your visit, CWP is all you need. We've compiled all key relevant information, from landmarks and transport to emergency and diplomatic contacts, to make your stay safer and more pleasurable.
+            </p>
+        </div>
+
+        {/* Key Facts Cards */}
+        <h2 className="text-2xl font-bold mb-6" style={{ color: PRIMARY_COLOR }}>Key Travel Facts</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Currency Card */}
+            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200 flex flex-col items-center text-center transition duration-200 hover:shadow-xl">
+                <PoundSterling className="w-10 h-10 mb-3" style={{ color: ACCENT_COLOR }} />
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">Currency</h3>
+                <p className="text-sm text-gray-600 font-bold">British Sterling Pound (£)</p>
+            </div>
+
+            {/* Country Code Card */}
+            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200 flex flex-col items-center text-center transition duration-200 hover:shadow-xl">
+                <Phone className="w-10 h-10 mb-3" style={{ color: ACCENT_COLOR }} />
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">Country Code</h3>
+                <p className="text-sm text-gray-600 font-bold">+44 (0)</p>
+            </div>
+
+            {/* Plug Type Card */}
+            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200 flex flex-col items-center text-center transition duration-200 hover:shadow-xl">
+                <Plug className="w-10 h-10 mb-3" style={{ color: ACCENT_COLOR }} />
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">Plug Type</h3>
+                <p className="text-sm text-gray-600 font-bold">3 Pin Plugs (Type G)</p>
+            </div>
+        </div>
+    </div>
+);
+// --- END WELCOME PAGE COMPONENT ---
+
+
+// Embassy Card Component (Reverted to use image property from data)
+const EmbassyCard = ({ embassy }) => (
+    <div className="bg-white shadow-lg rounded-xl overflow-hidden transform transition duration-300 hover:scale-[1.02] border border-gray-100">
+        
+        {/* Banner with Image Placeholder (Reverted) */}
+        <div className="relative h-32">
+            <img 
+                src={embassy.image} 
+                alt={`${embassy.country} Embassy`} 
+                className="w-full h-full object-cover" 
+                // Fallback to primary color background with country name if image fails
+                onError={(e) => { 
+                    e.target.onerror = null; 
+                    e.target.src = `https://placehold.co/400x200/${PRIMARY_COLOR.substring(1)}/FFFFFF?text=${embassy.country.toUpperCase()}` 
+                }} 
+            />
+            {/* Dark gradient for text visibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+            <p className="absolute bottom-3 left-4 text-xl font-bold text-white">{embassy.country}</p>
+        </div>
+
+        <div className="p-4 sm:p-6">
+            <h3 className={`text-xl font-bold text-gray-900 flex items-center mb-4`} style={{ color: PRIMARY_COLOR }}>
+                {embassy.country}
+            </h3>
+            
+            <div className="space-y-3">
+                {/* Address */}
+                <div className="flex items-start">
+                    <MapPin className="w-5 h-5 mr-3 flex-shrink-0 text-gray-500" />
+                    <div>
+                        <p className="text-sm font-semibold text-gray-800">Address</p>
+                        <p className="text-sm text-gray-600">{embassy.address}</p>
+                    </div>
+                </div>
+
+                {/* Phone */}
+                <div className="flex items-start">
+                    <Phone className="w-5 h-5 mr-3 flex-shrink-0 text-gray-500" />
+                    <div>
+                        <p className="text-sm font-semibold text-gray-800">Non-Emergency Phone</p>
+                        <a href={`tel:${embassy.phone.replace(/\s/g, '')}`} className="text-sm text-blue-600 hover:underline">{embassy.phone}</a>
+                    </div>
+                </div>
+
+                {/* Website */}
+                <div className="flex items-start">
+                    <Globe className="w-5 h-5 mr-3 flex-shrink-0 text-gray-500" />
+                    <div>
+                        <p className="text-sm font-semibold text-gray-800">Website</p>
+                        <a href={embassy.website} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:underline break-all">{embassy.website}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+
+// --- Diplomatic Services Page ---
+const DiplomaticPage = ({ embassies }) => (
+    <div className="p-4 sm:p-8">
+        <h1 className="text-3xl sm:text-4xl font-extrabold mb-4 flex items-center" style={{ color: PRIMARY_COLOR }}>
+            <ShieldCheck className="w-8 h-8 mr-3" />
+            Diplomatic Services (Embassies & Consulates)
+        </h1>
+        <p className="text-gray-600 mb-8">Essential contact details and locations for major diplomatic missions in the city of London.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {embassies.map(embassy => (
+                <EmbassyCard key={embassy.id} embassy={embassy} />
+            ))}
+        </div>
+    </div>
+);
+// --- END Diplomatic Services Page ---
+
+
 const BoardingPassCard = ({ airport }) => {
     const { name, code, city, country, type } = airport;
 
@@ -273,10 +525,61 @@ const LandmarksPage = ({ landmarks }) => (
     </div>
 );
 
+const AttractionsPage = ({ attractions }) => (
+    <div className="p-4 sm:p-8">
+        <h1 className="text-3xl sm:text-4xl font-extrabold mb-4 flex items-center" style={{ color: PRIMARY_COLOR }}>
+            <Star className="w-8 h-8 mr-3" />
+            Top London Attractions
+        </h1>
+        <p className="text-gray-600 mb-8">The must-visit entertainment, culture, and experience venues for tourists and residents.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {attractions.map(attraction => (
+                <LandmarkCard key={attraction.id} landmark={attraction} />
+            ))}
+        </div>
+    </div>
+);
+
+const FamilyOutingsPage = ({ outings }) => (
+    <div className="p-4 sm:p-8">
+        <h1 className="text-3xl sm:text-4xl font-extrabold mb-4 flex items-center" style={{ color: PRIMARY_COLOR }}>
+            <Users className="w-8 h-8 mr-3" />
+            Top London Family Outings
+        </h1>
+        <p className="text-gray-600 mb-8">The best family-friendly attractions and educational venues for visitors with children.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {outings.map(outing => (
+                <LandmarkCard key={outing.id} landmark={outing} />
+            ))}
+        </div>
+    </div>
+);
+
+const EmergencyPage = ({ contacts }) => (
+    <div className="p-4 sm:p-8">
+        <div className="bg-red-50 p-4 sm:p-6 rounded-xl shadow-inner mb-8 border border-red-200">
+             <h1 className="text-3xl sm:text-4xl font-extrabold mb-2 flex items-center text-red-700">
+                <Siren className="w-8 h-8 mr-3" />
+                London Emergency Contacts
+            </h1>
+            <p className="text-red-800 font-medium">
+                In a life-threatening emergency, always call 999 first. Use the non-emergency numbers below for less critical situations.
+            </p>
+        </div>
+       
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {contacts.map(contact => (
+                <EmergencyCard key={contact.id} contact={contact} />
+            ))}
+        </div>
+    </div>
+);
+
 
 const EventsPage = () => <PageTemplate title="London City Events Calendar" description="Upcoming planning meetings, community engagements, and infrastructure project deadlines in London." icon={CalendarDays} />;
 const SearchPage = () => <PageTemplate title="Global Data Search" description="Search across all London city projects, airports, and city guide databases." icon={Search} />;
-const EmergencyPage = () => <PageTemplate title="London Emergency Services & Contacts" description="Quick access to essential emergency and critical contact information for London." icon={AlertTriangle} />;
 
 const ExplorePage = ({ projects }) => (
     <div className="p-4 sm:p-8">
@@ -362,8 +665,6 @@ const SettingsPage = ({ userId }) => (
         </div>
     </div>
 );
-
-// --- New Guide Hub Component ---
 
 const GuidePage = ({ setCurrentPage }) => (
     <div className="p-4 sm:p-8">
@@ -453,9 +754,10 @@ const TopHeader = ({ setCurrentPage, currentPage }) => (
 
 // --- Page Router Mapping ---
 
-// The default PageTemplate is used for all POI pages except Landmarks, which has its own component.
+const pagesWithCustomComponents = ['landmarks', 'attractions', 'family', 'emergency', 'welcome', 'diplomatic'];
+
 const poiPageMap = poiItems.reduce((acc, item) => {
-    if (item.key !== 'landmarks') {
+    if (!pagesWithCustomComponents.includes(item.key)) {
         acc[item.key] = () => <PageTemplate title={item.label} description={item.description} icon={item.icon} />;
     }
     return acc;
@@ -464,7 +766,7 @@ const poiPageMap = poiItems.reduce((acc, item) => {
 // --- Main Application Component ---
 
 const App = () => {
-    const [currentPage, setCurrentPage] = useState('explore');
+    const [currentPage, setCurrentPage] = useState('welcome'); // Default to Welcome Page
     const [userId, setUserId] = useState(null);
     const [isAuthReady, setIsAuthReady] = useState(false);
     const [db, setDb] = useState(null); 
@@ -519,21 +821,16 @@ const App = () => {
     const cityProjects = initialCityProjects;
     const airports = initialAirports;
     const landmarks = londonLandmarks;
+    const attractions = londonAttractions; 
+    const familyOutings = londonFamilyOutings;
+    const emergencyContacts = londonEmergencyContacts;
+    const embassies = londonEmbassies; // Reverted embassy data
 
     // Combined navigation items for desktop sidebar 
     const allNavItems = [
         ...coreNavItems,
         { key: '---guide-header---', label: 'City Guide', icon: null, isHeader: true },
         ...poiItems
-    ];
-    
-    // Mobile navigation: 5 POI/Service items
-    const mobileNavItems = [
-        { key: 'landmarks', label: 'Landmarks', icon: Landmark },
-        { key: 'attractions', label: 'Attractions', icon: Star },
-        { key: 'family', label: 'Family', icon: Users },
-        { key: 'emergency', label: 'Emergency', icon: AlertTriangle },
-        { key: 'information', label: 'Info', icon: Info },
     ];
 
     const renderPage = () => {
@@ -553,12 +850,19 @@ const App = () => {
                 return <SearchPage />;
             case 'settings':
                 return <SettingsPage userId={userId} />;
-            case 'landmarks': // Dedicated component for Landmarks
+            case 'welcome': // Welcome Planner Page
+                return <WelcomePage />;
+            case 'diplomatic': // Diplomatic Services Page
+                return <DiplomaticPage embassies={embassies} />;
+            case 'landmarks': 
                 return <LandmarksPage landmarks={landmarks} />;
+            case 'attractions': 
+                return <AttractionsPage attractions={attractions} />;
+            case 'family':
+                return <FamilyOutingsPage outings={familyOutings} />;
             case 'emergency': 
-                return <EmergencyPage />;
+                return <EmergencyPage contacts={emergencyContacts} />;
             case 'guide':
-                // The main guide page is still available for desktop navigation
                 return <GuidePage setCurrentPage={setCurrentPage} />;
             default:
                 // Check if it's one of the other POI pages
@@ -566,8 +870,8 @@ const App = () => {
                     const PoiComponent = poiPageMap[currentPage];
                     return <PoiComponent />;
                 }
-                // Fallback to the default explore page
-                return <ExplorePage projects={cityProjects} />;
+                // Fallback to the Welcome page as the primary entry point
+                return <WelcomePage />;
         }
     };
 
@@ -609,4 +913,32 @@ const App = () => {
             <div className="flex-1 flex flex-col">
                 <TopHeader setCurrentPage={setCurrentPage} currentPage={currentPage} />
 
-                <main className
+                <main className="flex-1 overflow-y-auto pb-16 lg:pb-0">
+                    {renderPage()}
+                </main>
+            </div>
+            
+            {/* Mobile Bottom Tab Bar (Hidden on large screens) */}
+            <nav className="fixed bottom-0 inset-x-0 bg-white shadow-2xl z-10 lg:hidden border-t border-gray-200 h-16 flex justify-around items-center">
+                {mobileNavItems.map(item => (
+                    <button
+                        key={item.key}
+                        onClick={() => setCurrentPage(item.key)}
+                        className={`flex flex-col items-center justify-center flex-1 p-1 transition duration-150
+                            ${currentPage === item.key 
+                                ? 'text-white font-semibold' 
+                                : 'text-gray-500 hover:text-gray-900'}`
+                        }
+                        style={currentPage === item.key ? { color: PRIMARY_COLOR } : {}}
+                    >
+                        <item.icon className="w-6 h-6" />
+                        <span className="text-xs mt-0.5">{item.label}</span>
+                    </button>
+                ))}
+            </nav>
+
+        </div>
+    );
+};
+
+export default App;
