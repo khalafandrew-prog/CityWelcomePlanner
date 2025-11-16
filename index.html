@@ -8,46 +8,52 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Top bar -->
-  <header class="top-bar">
-    <div class="top-bar-left">
-      <img src="images/citywp-logo.png" alt="CityWP logo" class="logo" />
+  <!-- Top Bar / Brand -->
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/images/cwp-logo.png" alt="CityWP logo" class="brand-logo" />
       <div class="brand-text">
-        <span class="brand-name">CityWP</span>
-        <span class="brand-tagline">City Welcome Planner – London</span>
+        <div class="brand-title">CityWP</div>
+        <div class="brand-subtitle">City Welcome Planner – London</div>
       </div>
     </div>
-    <div class="top-bar-right">
-      <span class="offline-pill" id="offlineStatus">Offline-ready</span>
+
+    <div class="topbar-right">
+      <button id="loginBtn" class="btn btn-outline">Log in / Sign up</button>
+      <div id="userChip" class="user-chip hidden">
+        <span id="userNameLabel">Guest</span>
+        <button id="logoutBtn" class="chip-logout">Log out</button>
+      </div>
     </div>
   </header>
 
-  <!-- Main navigation -->
-  <nav class="main-nav">
-    <button class="nav-link active" data-section="welcome">Welcome</button>
-    <button class="nav-link" data-section="airports">Airports</button>
-    <button class="nav-link" data-section="attractions">Attractions</button>
-    <button class="nav-link" data-section="museums">Museums</button>
-    <button class="nav-link" data-section="family">Family</button>
-    <button class="nav-link" data-section="parks">Parks & Gardens</button>
-    <button class="nav-link" data-section="shopping">Shopping</button>
-    <button class="nav-link" data-section="emergency">Emergency</button>
+  <!-- Navigation -->
+  <nav class="nav">
+    <button class="nav-item active" data-section="welcome">Welcome</button>
+    <button class="nav-item" data-section="airports">Airports</button>
+    <button class="nav-item" data-section="attractions">Attractions</button>
+    <button class="nav-item" data-section="museums">Museums</button>
+    <button class="nav-item" data-section="family">Family</button>
+    <button class="nav-item" data-section="parks">Parks &amp; Gardens</button>
+    <button class="nav-item" data-section="shopping">Shopping</button>
+    <button class="nav-item" data-section="emergency">Emergency &amp; Embassies</button>
+    <button class="nav-item" data-section="saver">Saver & Local Deals</button>
   </nav>
 
   <main class="page">
-
-    <!-- WELCOME / HERO -->
-    <section id="section-welcome" class="section section-visible">
-      <div class="hero">
+    <!-- HERO BACKGROUND for Welcome -->
+    <section id="welcome" class="section section-active">
+      <div class="hero hero-london">
         <div class="hero-overlay">
           <div class="hero-content card">
             <h1>City Welcome Pack – London</h1>
-            <p class="hero-subtitle">
+            <p class="hero-tagline">
               Your offline-friendly guide to airports, transport, landmarks, shopping and emergency help in London.
             </p>
 
             <div class="hero-grid">
-              <div class="hero-column">
+              <!-- Column 1 -->
+              <div class="hero-col">
                 <h2>About London</h2>
                 <p>
                   London is the capital of England and the United Kingdom. The city is filled with historic landmarks,
@@ -55,34 +61,36 @@
                 </p>
               </div>
 
-              <div class="hero-column">
+              <!-- Column 2 -->
+              <div class="hero-col">
                 <h2>Key City Info</h2>
-                <ul class="info-list">
+                <ul class="bullet-list">
                   <li><strong>Currency:</strong> British Pound Sterling (£)</li>
                   <li><strong>Country code:</strong> +44 (0)</li>
-                  <li><strong>Time zone:</strong> GMT / BST in summer</li>
+                  <li><strong>Time zone:</strong> GMT / BST</li>
                   <li><strong>Plugs:</strong> Type G, 3-pin</li>
                   <li><strong>Transport:</strong> TfL – Underground, Overground, DLR, buses, trains</li>
                   <li><strong>Payment:</strong> Contactless card, phone pay, or Oyster</li>
                 </ul>
               </div>
 
-              <div class="hero-column">
+              <!-- Column 3 -->
+              <div class="hero-col">
                 <h2>How CityWP Helps You</h2>
-                <ul class="info-list">
-                  <li>Clear airport → London transport options</li>
-                  <li>Top attractions & landmarks by category</li>
-                  <li>Museum and family activity ideas</li>
-                  <li>Parks & gardens for relaxing days</li>
-                  <li>Shopping areas and tips</li>
-                  <li>Emergency numbers & embassy details</li>
+                <ul class="bullet-list">
+                  <li>Clear airport ➜ London transport options</li>
+                  <li>Top attractions &amp; landmarks by category</li>
+                  <li>Museum &amp; family-friendly ideas</li>
+                  <li>Parks &amp; gardens for relaxing days</li>
+                  <li>Shopping areas, tips and opening info</li>
+                  <li>Emergency numbers &amp; embassy details</li>
                 </ul>
               </div>
             </div>
 
-            <div class="hero-footer">
-              <span class="pill">Designed to work offline</span>
-              <span class="pill pill-secondary">Perfect for first-time visitors</span>
+            <div class="hero-cta">
+              <button class="btn btn-primary" data-section-target="airports">Plan from the Airport</button>
+              <button class="btn btn-secondary" data-section-target="attractions">See Top Attractions</button>
             </div>
           </div>
         </div>
@@ -90,358 +98,197 @@
     </section>
 
     <!-- AIRPORTS – BOARDING PASS STYLE -->
-    <section id="section-airports" class="section">
-      <h2 class="section-title">Airports & Transport to Central London</h2>
+    <section id="airports" class="section">
+      <h2 class="section-title">Airports &amp; Transport to Central London</h2>
       <p class="section-intro">
-        London is served by several airports. These cards show typical train options into central London.
-        Always check live prices & times before you travel.
+        London is served by multiple airports. These boarding-pass style cards show sample train options into central London.
+        Always check live prices &amp; times before you travel.
       </p>
 
-      <div class="airport-grid">
-
-        <!-- Heathrow -->
-        <article class="boarding-pass heathrow">
-          <header class="bp-header">
-            <div>
-              <span class="bp-label">Airport</span>
-              <h3>Heathrow (LHR)</h3>
-              <span class="bp-sub">West London • Underground + fast trains</span>
-            </div>
-            <div class="bp-tag">Zone 1-6</div>
-          </header>
-          <div class="bp-body">
-            <div class="bp-row">
-              <div class="bp-col">
-                <h4>Heathrow Express</h4>
-                <p><strong>From:</strong> London Paddington</p>
-                <p><strong>To:</strong> Heathrow Terminals 2/3, 4, 5</p>
-                <p><strong>Duration:</strong> 15–20 minutes</p>
-                <p><strong>Approx fare:</strong> from £22 (single)</p>
-              </div>
-              <div class="bp-col">
-                <h4>Elizabeth line (TfL Rail)</h4>
-                <p><strong>From:</strong> Paddington, Bond Street, Tottenham Court Road, Liverpool Street</p>
-                <p><strong>Duration:</strong> 30–50 minutes</p>
-                <p><strong>Payment:</strong> Contactless / Oyster</p>
-              </div>
-              <div class="bp-col">
-                <h4>Piccadilly line</h4>
-                <p><strong>From:</strong> Piccadilly line stations (e.g. King’s Cross, Piccadilly Circus)</p>
-                <p><strong>Duration:</strong> ~50 minutes from Zone 1</p>
-                <p><strong>Best for:</strong> Cheapest direct Tube route</p>
-              </div>
-            </div>
-            <footer class="bp-footer">
-              Always use the correct ticket for each service – tickets are not interchangeable between operators.
-            </footer>
-          </div>
-        </article>
-
-        <!-- Gatwick -->
-        <article class="boarding-pass gatwick">
-          <header class="bp-header">
-            <div>
-              <span class="bp-label">Airport</span>
-              <h3>Gatwick (LGW)</h3>
-              <span class="bp-sub">South of London • Fast trains to Victoria / London Bridge</span>
-            </div>
-            <div class="bp-tag">Outside Zones</div>
-          </header>
-          <div class="bp-body">
-            <div class="bp-row">
-              <div class="bp-col">
-                <h4>Gatwick Express</h4>
-                <p><strong>From:</strong> London Victoria</p>
-                <p><strong>To:</strong> Gatwick Airport</p>
-                <p><strong>Duration:</strong> 30–35 minutes</p>
-              </div>
-              <div class="bp-col">
-                <h4>Southern</h4>
-                <p><strong>From:</strong> London Victoria</p>
-                <p><strong>To:</strong> Gatwick Airport</p>
-                <p><strong>Duration:</strong> ~35 minutes</p>
-                <p><strong>Often cheaper than Express.</strong></p>
-              </div>
-              <div class="bp-col">
-                <h4>Thameslink</h4>
-                <p><strong>From:</strong> St Pancras Intl / London Bridge / Blackfriars</p>
-                <p><strong>To:</strong> Gatwick Airport</p>
-                <p><strong>Best for:</strong> Direct from King’s Cross / St Pancras area</p>
-              </div>
-            </div>
-            <footer class="bp-footer">
-              Gatwick services may not accept Oyster – use contactless or a rail ticket.
-            </footer>
-          </div>
-        </article>
-
-        <!-- Luton -->
-        <article class="boarding-pass luton">
-          <header class="bp-header">
-            <div>
-              <span class="bp-label">Airport</span>
-              <h3>Luton (LTN)</h3>
-              <span class="bp-sub">North of London • Shuttle bus from Parkway station</span>
-            </div>
-            <div class="bp-tag">Outside Zones</div>
-          </header>
-          <div class="bp-body">
-            <div class="bp-row">
-              <div class="bp-col">
-                <h4>East Midlands / Thameslink</h4>
-                <p><strong>From:</strong> St Pancras Intl / Farringdon / Blackfriars</p>
-                <p><strong>To:</strong> Luton Airport Parkway</p>
-                <p><strong>Duration:</strong> 25–35 minutes</p>
-              </div>
-              <div class="bp-col">
-                <h4>Shuttle bus</h4>
-                <p><strong>From:</strong> Luton Airport Parkway station</p>
-                <p><strong>To:</strong> Luton Airport terminal</p>
-                <p><strong>Duration:</strong> ~10 minutes</p>
-              </div>
-              <div class="bp-col">
-                <h4>Notes</h4>
-                <p>Train tickets usually include the shuttle bus. Check your ticket details before boarding.</p>
-              </div>
-            </div>
-            <footer class="bp-footer">
-              Trains use National Rail fares – Oyster is not valid beyond the London boundary.
-            </footer>
-          </div>
-        </article>
-
-        <!-- Stansted + City -->
-        <article class="boarding-pass stansted">
-          <header class="bp-header">
-            <div>
-              <span class="bp-label">Airport</span>
-              <h3>Stansted (STN)</h3>
-              <span class="bp-sub">North-East of London • Fast train from Liverpool Street</span>
-            </div>
-            <div class="bp-tag">Outside Zones</div>
-          </header>
-          <div class="bp-body">
-            <div class="bp-row">
-              <div class="bp-col">
-                <h4>Stansted Express</h4>
-                <p><strong>From:</strong> London Liverpool Street</p>
-                <p><strong>To:</strong> Stansted Airport</p>
-                <p><strong>Duration:</strong> ~45 minutes</p>
-              </div>
-              <div class="bp-col">
-                <h4>Notes</h4>
-                <p>Advance tickets can be significantly cheaper than buying on the day.</p>
-              </div>
-              <div class="bp-col">
-                <h4>Tip</h4>
-                <p>For early flights, check first/last train times carefully.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="boarding-pass city-airport">
-          <header class="bp-header">
-            <div>
-              <span class="bp-label">Airport</span>
-              <h3>London City (LCY)</h3>
-              <span class="bp-sub">East London • DLR direct to Bank / Stratford</span>
-            </div>
-            <div class="bp-tag">Zone 3</div>
-          </header>
-          <div class="bp-body">
-            <div class="bp-row">
-              <div class="bp-col">
-                <h4>DLR (Docklands Light Railway)</h4>
-                <p><strong>From:</strong> Bank / Tower Gateway / Stratford</p>
-                <p><strong>To:</strong> London City Airport</p>
-                <p><strong>Duration:</strong> ~25–35 minutes</p>
-                <p><strong>Payment:</strong> Contactless / Oyster</p>
-              </div>
-              <div class="bp-col">
-                <h4>Best for</h4>
-                <p>Business travellers and short-haul flights with hand luggage.</p>
-              </div>
-            </div>
-            <footer class="bp-footer">
-              DLR is part of TfL – standard Tube/rail fares apply within Zones 1-3.
-            </footer>
-          </div>
-        </article>
-
+      <div id="airportCards" class="boarding-grid">
+        <!-- Cards are injected by app.js using your existing Heathrow / Gatwick etc. data -->
       </div>
     </section>
 
     <!-- ATTRACTIONS -->
-    <section id="section-attractions" class="section">
-      <h2 class="section-title">Attractions & Landmarks</h2>
+    <section id="attractions" class="section">
+      <h2 class="section-title">Top Attractions &amp; Landmarks</h2>
       <p class="section-intro">
-        Classic London sights you shouldn’t miss. These are grouped by area to help you plan your day.
+        Iconic places you shouldn’t miss on your first trip to London. Filter by category and price.
       </p>
-      <div class="card-grid">
-        <article class="info-card">
-          <h3>Westminster & South Bank</h3>
-          <ul>
-            <li>Big Ben & Houses of Parliament</li>
-            <li>Westminster Abbey</li>
-            <li>London Eye (paid)</li>
-            <li>Walk along the South Bank to Tower Bridge</li>
-          </ul>
-        </article>
-        <article class="info-card">
-          <h3>City of London</h3>
-          <ul>
-            <li>St Paul’s Cathedral</li>
-            <li>Sky Garden (free – booking required)</li>
-            <li>Leadenhall Market</li>
-            <li>Tower of London & Tower Bridge</li>
-          </ul>
-        </article>
-        <article class="info-card">
-          <h3>Royal Highlights</h3>
-          <ul>
-            <li>Buckingham Palace & The Mall</li>
-            <li>Changing of the Guard (check dates)</li>
-            <li>Kensington Palace & Palace Gardens</li>
-          </ul>
-        </article>
+
+      <div class="filter-row">
+        <input id="attractionSearch" type="text" placeholder="Search attractions (e.g. Tower Bridge, museum)..." />
+        <select id="attractionFilter">
+          <option value="all">All</option>
+          <option value="free">Free</option>
+          <option value="family">Family-friendly</option>
+          <option value="view">Views</option>
+        </select>
       </div>
+
+      <div id="attractionCards" class="card-grid"></div>
     </section>
 
     <!-- MUSEUMS -->
-    <section id="section-museums" class="section">
+    <section id="museums" class="section">
       <h2 class="section-title">Museums</h2>
-      <p class="section-intro">
-        Many London museums are free for their main collections. Some special exhibitions charge for entry.
-      </p>
-      <div class="card-grid">
-        <article class="info-card">
-          <h3>British Museum – Bloomsbury</h3>
-          <p>World-famous collection of art & artefacts. Free entry to main galleries.</p>
-          <p><strong>Nearest Tube:</strong> Holborn / Tottenham Court Road</p>
-        </article>
-        <article class="info-card">
-          <h3>Natural History Museum – South Kensington</h3>
-          <p>Dinosaurs, nature and science. Ideal for children.</p>
-          <p><strong>Nearest Tube:</strong> South Kensington</p>
-        </article>
-        <article class="info-card">
-          <h3>Science Museum – South Kensington</h3>
-          <p>Interactive exhibits and IMAX. Free entry.</p>
-        </article>
-        <article class="info-card">
-          <h3>V&A Museum – South Kensington</h3>
-          <p>Art, design & fashion from around the world.</p>
-        </article>
-      </div>
+      <p class="section-intro">World-class museums with many free permanent collections.</p>
+      <div id="museumCards" class="card-grid"></div>
     </section>
 
     <!-- FAMILY -->
-    <section id="section-family" class="section">
+    <section id="family" class="section">
       <h2 class="section-title">Family Activities</h2>
-      <div class="card-grid">
-        <article class="info-card">
-          <h3>Kid-friendly museums</h3>
-          <ul>
-            <li>Natural History Museum</li>
-            <li>Science Museum</li>
-            <li>London Transport Museum (paid)</li>
-          </ul>
-        </article>
-        <article class="info-card">
-          <h3>Days out</h3>
-          <ul>
-            <li>London Zoo (Regent’s Park)</li>
-            <li>Boat trip on the Thames</li>
-            <li>Warner Bros. Studio Tour – Harry Potter (outside London)</li>
-          </ul>
-        </article>
-      </div>
+      <p class="section-intro">Ideas that work with kids – indoor and outdoor.</p>
+      <div id="familyCards" class="card-grid"></div>
     </section>
 
     <!-- PARKS -->
-    <section id="section-parks" class="section">
-      <h2 class="section-title">Parks & Gardens</h2>
-      <div class="card-grid">
-        <article class="info-card">
-          <h3>Hyde Park & Kensington Gardens</h3>
-          <p>Central, huge green space. Great for walks, cycling & paddle boats.</p>
-        </article>
-        <article class="info-card">
-          <h3>Regent’s Park & Primrose Hill</h3>
-          <p>Beautiful gardens with views across London from Primrose Hill.</p>
-        </article>
-        <article class="info-card">
-          <h3>Greenwich Park</h3>
-          <p>Historic park with the Royal Observatory and great river views.</p>
-        </article>
-      </div>
+    <section id="parks" class="section">
+      <h2 class="section-title">Parks &amp; Gardens</h2>
+      <p class="section-intro">Green spaces to relax, picnic and escape the crowds.</p>
+      <div id="parkCards" class="card-grid"></div>
     </section>
 
     <!-- SHOPPING -->
-    <section id="section-shopping" class="section">
+    <section id="shopping" class="section">
       <h2 class="section-title">Shopping Areas</h2>
-      <div class="card-grid">
-        <article class="info-card">
-          <h3>Oxford Street & Regent Street</h3>
-          <p>Big brands, flagship stores and department stores.</p>
-        </article>
-        <article class="info-card">
-          <h3>Covent Garden & Seven Dials</h3>
-          <p>Independents, markets and street performers.</p>
-        </article>
-        <article class="info-card">
-          <h3>Westfield (Stratford / Shepherd’s Bush)</h3>
-          <p>Large indoor malls – good for rainy days.</p>
-        </article>
-      </div>
+      <p class="section-intro">High streets, malls and markets across London.</p>
+      <div id="shoppingCards" class="card-grid"></div>
     </section>
 
     <!-- EMERGENCY & EMBASSIES -->
-    <section id="section-emergency" class="section">
-      <h2 class="section-title">Emergency & Embassy Help</h2>
-
-      <div class="emergency-grid">
-        <article class="info-card">
-          <h3>UK Emergency Numbers</h3>
-          <ul class="info-list">
-            <li><strong>999:</strong> Police, Ambulance, Fire (life-threatening emergency)</li>
-            <li><strong>112:</strong> European emergency number (works like 999)</li>
-            <li><strong>111:</strong> Non-emergency medical advice (NHS)</li>
+    <section id="emergency" class="section">
+      <h2 class="section-title">Emergency &amp; Embassies</h2>
+      <div class="emergency-layout">
+        <div class="card">
+          <h3>Emergency Numbers (UK)</h3>
+          <ul class="bullet-list">
+            <li><strong>999</strong> – Police, Ambulance, Fire (emergency)</li>
+            <li><strong>112</strong> – EU-wide emergency number</li>
+            <li><strong>111</strong> – Medical advice (non-emergency)</li>
           </ul>
-          <p class="small">
-            When calling, clearly state your location (street name, nearby landmark or postcode).
-          </p>
-        </article>
+        </div>
 
-        <article class="info-card">
+        <div class="card">
           <h3>Embassies in London</h3>
-          <label for="embassySelect" class="embassy-label">Choose your country:</label>
-          <select id="embassySelect" class="embassy-select">
-            <option value="canada">Canada</option>
-            <option value="usa">United States</option>
-            <option value="france">France</option>
-            <option value="germany">Germany</option>
-            <option value="australia">Australia</option>
-            <option value="india">India</option>
-          </select>
-
-          <div id="embassyCard" class="embassy-card">
-            <!-- JS injects embassy details here -->
-          </div>
-
-          <p class="small">
-            You can add more embassies later in <code>app.js</code> without changing the HTML.
-          </p>
-        </article>
+          <p>Select your country to see contact details:</p>
+          <select id="embassySelect"></select>
+          <div id="embassyDetails" class="embassy-card"></div>
+        </div>
       </div>
     </section>
 
+    <!-- SAVER & MONETISATION HOOK -->
+    <section id="saver" class="section">
+      <h2 class="section-title">CityWP Saver &amp; Local Deals</h2>
+      <p class="section-intro">
+        Coming soon – activate coupons, Traveller Saver passes and 2-for-1 offers. This is where your
+        monetisation tiers (Savers / Locals / Global) will live.
+      </p>
+
+      <div class="saver-grid">
+        <div class="card saver-tier">
+          <h3>Saver Pass</h3>
+          <p>One-off pass for tourists staying up to 30 days. Unlock hand-picked coupons &amp; vouchers.</p>
+          <ul class="bullet-list">
+            <li>Traveller discounts and offers</li>
+            <li>Best for short stays</li>
+          </ul>
+          <button class="btn btn-secondary disabled">Coming soon</button>
+        </div>
+
+        <div class="card saver-tier">
+          <h3>Locals – Monthly</h3>
+          <p>London-based users get ongoing 2-for-1 offers &amp; local deals.</p>
+          <ul class="bullet-list">
+            <li>Standard London, Premium City, or Global tiers</li>
+            <li>Connect to local businesses &amp; influencers</li>
+          </ul>
+          <button class="btn btn-secondary disabled">Coming soon</button>
+        </div>
+
+        <div class="card saver-tier">
+          <h3>Partner Businesses</h3>
+          <p>Bronze, Silver and Gold marketing packages for local businesses.</p>
+          <ul class="bullet-list">
+            <li>Sponsored places</li>
+            <li>Coupons &amp; vouchers</li>
+            <li>Push notifications</li>
+          </ul>
+          <button class="btn btn-secondary disabled">Coming soon</button>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="page-footer">
-    CityWP – City Welcome Planner • London • Offline-friendly travel helper
+  <footer class="footer">
+    CityWP – City Welcome Planner • London • Your travel-friendly pocket guide
   </footer>
+
+  <!-- LOGIN MODAL (OPTION 3: EMAIL or PHONE) -->
+  <div id="loginModal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-body card">
+      <button id="closeLogin" class="modal-close">✕</button>
+      <h2>Log in / Create account</h2>
+      <p class="modal-subtitle">Use email or phone number to save favourites and access Saver passes.</p>
+
+      <div class="tab-row">
+        <button class="tab-btn tab-active" data-tab="emailTab">Email</button>
+        <button class="tab-btn" data-tab="phoneTab">Phone</button>
+      </div>
+
+      <!-- EMAIL LOGIN -->
+      <div id="emailTab" class="tab-panel tab-panel-active">
+        <label>Email</label>
+        <input id="emailInput" type="email" placeholder="you@example.com" />
+        <label>Password</label>
+        <input id="passwordInput" type="password" placeholder="Choose a password" />
+        <div class="modal-actions">
+          <button id="emailLoginBtn" class="btn btn-primary">Log in</button>
+          <button id="emailSignupBtn" class="btn btn-secondary">Create account</button>
+        </div>
+        <p class="helper-text">Later you can switch this to magic link login if you prefer.</p>
+      </div>
+
+      <!-- PHONE LOGIN -->
+      <div id="phoneTab" class="tab-panel">
+        <label>Phone number (with country code)</label>
+        <input id="phoneInput" type="tel" placeholder="+44 7xxx xxx xxx" />
+        <div id="recaptcha-container"></div>
+        <div class="modal-actions">
+          <button id="phoneSendCodeBtn" class="btn btn-primary">Send code</button>
+        </div>
+        <div id="phoneCodeArea" class="hidden">
+          <label>Enter verification code</label>
+          <input id="phoneCodeInput" type="text" placeholder="123456" />
+          <button id="phoneVerifyBtn" class="btn btn-secondary">Verify &amp; log in</button>
+        </div>
+      </div>
+
+      <p id="loginStatus" class="status-text"></p>
+    </div>
+  </div>
+
+  <!-- FIREBASE (OPTION 3 – email or phone auth) -->
+  <!-- 1) Go to https://console.firebase.google.com, create a project and a Web App -->
+  <!-- 2) Enable Email/Password and Phone sign-in in Authentication settings -->
+  <!-- 3) Paste your config object below instead of the placeholder -->
+
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+  <script>
+    // TODO: replace with your real Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
 
   <script src="app.js"></script>
 </body>
