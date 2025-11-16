@@ -3,126 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>CityWP: London Traveler's Hub</title>
+    
     <link rel="stylesheet" href="css/style.css"> 
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="header-logo">
-            <a href="index.html">
-                <img src="assets/citywp-logo-white.png" alt="CityWP Logo">
-            </a>
-        </div>
+    <div id="root"></div>
 
-        <nav class="main-nav">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="Transport.html">Transport</a></li>
-                <li><a href="Discover.html">Discover</a></li>
-                <li><a href="Essentials.html">Essentials</a></li>
-            </ul>
-        </nav>
-        
-        <div class="header-actions">
-            <a href="#login" class="btn btn-login">Log In</a>
-            <a href="#planner-form" class="btn btn-plan-cta">Plan</a>
-        </div>
-
-        <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
-    </header>
-
-    <section class="hero">
-        <div class="hero-background"></div> 
-        
-        <div class="hero-content">
-            <h1>Your London Trip Starts Here.</h1>
-            <p>Seamless planning, live transport updates, and essential traveler guidance, all in one hub.</p>
-            
-            <a href="#planner-form" class="btn btn-primary">
-                CREATE FREE ITINERARY
-            </a>
-        </div>
-    </section>
-
-    <div id="planner-form" class="planner-widget">
-        </div>
-
-    <section class="feature-cards">
-        <h2>Explore London's Essentials</h2>
-        <p class="section-subtitle">Navigate, Discover, and Prepare for your trip with our core tools.</p>
-
-        <div class="cards-container">
-            
-            <article class="feature-card">
-                <img src="assets/8. Madame Tussauds (A5).jpg" alt="Madame Tussauds" class="card-image">
-                <div class="card-content">
-                    <h3>Discover London</h3>
-                    <p>Curated itineraries and hidden gems for culture, shopping, and dining.</p>
-                    <a href="Discover.html" class="btn btn-secondary">Explore Attractions</a>
-                </div>
-            </article>
-
-            <article class="feature-card">
-                <img src="assets/1.LHR.jpg" alt="London Heathrow Airport" class="card-image">
-                <div class="card-content">
-                    <h3>Transport & Travel</h3>
-                    <p>Live Tube updates, Oystercard guidance, and navigation tips for your journey.</p>
-                    <a href="Transport.html" class="btn btn-secondary">Check Transport</a>
-                </div>
-            </article>
-
-            <article class="feature-card">
-                <img src="assets/welcome card-final.jpg" alt="London Welcome Card" class="card-image">
-                <div class="card-content">
-                    <h3>Essentials & Safety</h3>
-                    <p>Visa checklists, currency tips, weather alerts, and emergency contacts.</p>
-                    <a href="Essentials.html" class="btn btn-secondary">View Essentials</a>
-                </div>
-            </article>
-
-        </div>
-    </section>
-
-    <footer class="main-footer">
-        <div class="footer-container">
-            
-            <div class="footer-logo-cta">
-                <img src="assets/citywp-logo-white.png" alt="CityWP Logo" class="footer-brand-logo">
-                <p class="brand-tagline">Your essential hub for London travel planning.</p>
-                <a href="#planner-form" class="btn btn-primary btn-footer-cta">Start Planning Today</a>
-            </div>
-
-            <div class="footer-links">
-                <div class="footer-column">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="Transport.html">Transport</a></li>
-                        <li><a href="Discover.html">Discover</a></li>
-                        <li><a href="Essentials.html">Essentials</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-column">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#contact">Contact Us</a></li>
-                        <li><a href="#privacy">Privacy Policy</a></li>
-                        <li><a href="#terms">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-copyright">
-            <p>&copy; <span id="current-year"></span> CityWP. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="js/script.js"></script>
-    <script>
-        // JS to automatically update the copyright year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+    <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
