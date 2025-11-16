@@ -1,37 +1,73 @@
-// js/script.js
+import React, { useState } from 'react';
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Select the elements
-    const navToggle = document.querySelector('.nav-toggle'); // The hamburger button
-    const mainNav = document.querySelector('.main-nav');   // The navigation container
+const App = () => {
+  // State for the Navigation Menu (starts closed)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // State for the Planner Widget (starts hidden)
+  const [isPlannerVisible, setIsPlannerVisible] = useState(false);
 
-    // 2. Check if elements exist before adding the listener
-    if (navToggle && mainNav) {
-        // Event listener for the toggle button
-        navToggle.addEventListener('click', () => {
-            // Toggles the 'active' class on the navigation
-            // CSS handles the actual display/hide based on this class
-            mainNav.classList.toggle('active');
-        });
+  // Function to close the menu (used when a link is clicked)
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+    // Note: React Router handles the actual navigation change
+  };
 
-        // 3. Optional: Add a listener to close the menu after a link is clicked
-        document.querySelectorAll('.main-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                // Remove the 'active' class to hide the menu
-                mainNav.classList.remove('active');
-            });
-        });
-    }
+  // Function to toggle the planner widget visibility
+  const handlePlannerCtaClick = (e) => {
+    // Prevent default jump *must* be done in the handler
+    e.preventDefault(); 
+    setIsPlannerVisible(prev => !prev);
+  };
 
-    // 4. (Optional) JS for the Planner Widget to slide up/down when 'Plan' is clicked
-    const plannerCta = document.querySelector('.btn-plan-cta');
-    const plannerWidget = document.getElementById('planner-form');
+  return (
+    <div className="CityWP-App">
+      
+      {/* 1. HEADER & NAVIGATION LOGIC */}
+      <header className="main-header">
+        {/* ... other header content ... */}
 
-    if (plannerCta && plannerWidget) {
-        plannerCta.addEventListener('click', (e) => {
-            e.preventDefault(); // Stop the default jump
-            plannerWidget.classList.toggle('visible');
-            // Note: You must add CSS for the .planner-widget and .planner-widget.visible state
-        });
-    }
-});
+        <nav className={isMenuOpen ? 'main-nav active' : 'main-nav'}>
+          <ul>
+            <li><a href="/" onClick={handleLinkClick}>Home</a></li>
+            <li><a href="/transport" onClick={handleLinkClick}>Transport</a></li>
+            {/* ... other links ... */}
+          </ul>
+        </nav>
+        
+        <div className="header-actions">
+          {/* Use the state toggle function on the Click handler */}
+          <a 
+            href="#planner-form" 
+            className="btn btn-plan-cta" 
+            onClick={handlePlannerCtaClick}
+          >
+            Plan
+          </a>
+        </div>
+        
+        {/* Use the state toggle function on the Click handler */}
+        <button 
+          className="nav-toggle" 
+          aria-label="Toggle navigation"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          &#9776;
+        </button>
+      </header>
+
+      {/* 2. PLANNER WIDGET LOGIC */}
+      <div 
+        id="planner-form" 
+        className={isPlannerVisible ? 'planner-widget visible' : 'planner-widget'}
+      >
+        {/* Content of the planner form will go here */}
+        <h2>Planner Form Content</h2>
+      </div>
+
+      {/* ... rest of your App content (hero, feature-cards, footer) ... */}
+    </div>
+  );
+};
+
+export default App;
